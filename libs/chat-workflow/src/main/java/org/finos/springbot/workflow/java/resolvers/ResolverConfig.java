@@ -97,10 +97,16 @@ public class ResolverConfig {
 
 	@Bean
 	@ConditionalOnMissingBean
+	public ChatButtonWorkflowResolverFactory chatButtonWorkflowResolverFactory() {
+		return new ChatButtonWorkflowResolverFactory();
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
 	public ChatVariableWorkflowResolverFactory chatVariableWorkflowResolverFactory() {
 		return new ChatVariableWorkflowResolverFactory();
 	}
-
+	
 	@Bean
 	@ConditionalOnMissingBean
 	public AddressableWorkflowResolverFactory addressableWorkflowResolverFactory() {

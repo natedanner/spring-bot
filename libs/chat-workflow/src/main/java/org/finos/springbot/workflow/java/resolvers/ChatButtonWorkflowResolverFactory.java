@@ -5,6 +5,11 @@ import java.util.Optional;
 import org.finos.springbot.workflow.annotations.ChatButton;
 import org.finos.springbot.workflow.java.mapping.ChatHandlerExecutor;
 
+/**
+ * Get chat button detail in controller 
+ * @author mankvaia
+ *
+ */
 public class ChatButtonWorkflowResolverFactory implements WorkflowResolverFactory {
 	
 
@@ -15,7 +20,6 @@ public class ChatButtonWorkflowResolverFactory implements WorkflowResolverFactor
 			this.che = che;
 		}
 
-		
 		@Override
 		public Optional<Object> resolve(Class<?> cl) {
 			if (ChatButton.class.isAssignableFrom(cl) && che.getOriginatingMapping().getMapping() instanceof ChatButton) {

@@ -14,7 +14,7 @@ import org.finos.springbot.teams.content.TeamsChat;
 import org.finos.springbot.teams.content.TeamsMultiwayChat;
 import org.finos.springbot.teams.content.TeamsUser;
 import org.finos.springbot.teams.conversations.TeamsConversations;
-import org.finos.springbot.teams.messages.MessageActivityHandler;
+import org.finos.springbot.teams.messages.FileActivityHandler;
 import org.finos.springbot.teams.state.TeamsStateStorage;
 import org.finos.springbot.teams.turns.CurrentTurnContext;
 import org.finos.springbot.tests.controller.AbstractHandlerMappingTest;
@@ -72,7 +72,7 @@ public class TeamsHandlerMappingTest extends AbstractHandlerMappingTest {
 	TurnContext tc;
 	
 	@Autowired
-	MessageActivityHandler mah;
+	FileActivityHandler mah;
 	
 	@Autowired
 	ChatRequestChatHandlerMapping hm;

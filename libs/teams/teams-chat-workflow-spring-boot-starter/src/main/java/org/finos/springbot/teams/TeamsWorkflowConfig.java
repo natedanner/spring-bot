@@ -3,8 +3,6 @@ package org.finos.springbot.teams;
 import java.io.IOException;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.finos.springbot.ChatWorkflowConfig;
 import org.finos.springbot.teams.bot.BotController;
 import org.finos.springbot.teams.content.TeamsContentConfig;
@@ -15,12 +13,14 @@ import org.finos.springbot.teams.conversations.TeamsConversationsConfig;
 import org.finos.springbot.teams.form.TeamsFormConverter;
 import org.finos.springbot.teams.form.TeamsFormDeserializerModule;
 import org.finos.springbot.teams.handlers.ActivityHandler;
+import org.finos.springbot.teams.handlers.AttachmentHandler;
 import org.finos.springbot.teams.handlers.SimpleActivityHandler;
+import org.finos.springbot.teams.handlers.SimpleAttachmentHandler;
 import org.finos.springbot.teams.handlers.TeamsResponseHandler;
 import org.finos.springbot.teams.history.StateStorageBasedTeamsHistory;
 import org.finos.springbot.teams.history.StorageIDResponseHandler;
 import org.finos.springbot.teams.history.TeamsHistory;
-import org.finos.springbot.teams.messages.MessageActivityHandler;
+import org.finos.springbot.teams.messages.FileActivityHandler;
 import org.finos.springbot.teams.response.templating.EntityMarkupTemplateProvider;
 import org.finos.springbot.teams.state.AzureBlobStateStorage;
 import org.finos.springbot.teams.state.FileStateStorage;
@@ -60,6 +60,7 @@ import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.microsoft.bot.builder.TurnContext;
+import com.microsoft.bot.builder.teams.TeamsActivityHandler;
 import com.microsoft.bot.integration.BotFrameworkHttpAdapter;
 import com.microsoft.bot.schema.ChannelAccount;
 
@@ -122,16 +123,25 @@ public class TeamsWorkflowConfig implements InitializingBean {
 		return new ThymeleafTemplateProvider(prefix, suffix, defaultName, resourceLoader, formConverter);
 	}
 	
+	
+	
+	@Bean
+	@ConditionalOnMissingBean
+	public AttachmentHandler attachmentHandler() {
+		return new SimpleAttachmentHandler();
+	}
+	
 	@Bean
 	@ConditionalOnMissingBean
 	public TeamsResponseHandler teamsResponseHandler(
+			AttachmentHandler attachmentHandler,
 			EntityMarkupTemplateProvider markupTemplater,
 			AdaptiveCardTemplateProvider formTemplater,
 			ThymeleafTemplateProvider displayTemplater,
 			TeamsStateStorage th,
 			ActivityHandler ah) {
 		return new TeamsResponseHandler(
-				null,	// attachment handler
+				attachmentHandler,	// attachment handler
 				markupTemplater,
 				formTemplater,
 				displayTemplater,
@@ -200,21 +210,33 @@ public class TeamsWorkflowConfig implements InitializingBean {
 		return new TeamsFormConverter(om);
 	}
 	
+//	@Bean
+//	@ConditionalOnMissingBean
+//	public MessageActivityHandler teamsMessageActivityHandler(
+//			List<ActionConsumer> messageConsumers, 
+//			TeamsHTMLParser parser, 
+//			FormValidationProcessor fvp, 
+//			TeamsConversations tc,
+//			TeamsStateStorage teamsStateStorage,
+//			TeamsFormConverter fc) {
+//		return new MessageActivityHandler(messageConsumers, tc, teamsStateStorage, parser, fc, fvp);
+//	}
+	
 	@Bean
 	@ConditionalOnMissingBean
-	public MessageActivityHandler teamsMessageActivityHandler(
+	public TeamsActivityHandler teamsActivityHandler(
 			List<ActionConsumer> messageConsumers, 
 			TeamsHTMLParser parser, 
 			FormValidationProcessor fvp, 
 			TeamsConversations tc,
 			TeamsStateStorage teamsStateStorage,
 			TeamsFormConverter fc) {
-		return new MessageActivityHandler(messageConsumers, tc, teamsStateStorage, parser, fc, fvp);
+		return new FileActivityHandler(messageConsumers, tc, teamsStateStorage, parser, fc, fvp);
 	}
     
 	@Bean
     @ConditionalOnMissingBean
-    public BotController teamsBotController(MessageActivityHandler mah, BotFrameworkHttpAdapter bfa) {
+    public BotController teamsBotController(TeamsActivityHandler mah, BotFrameworkHttpAdapter bfa) {
     	return new BotController(bfa, mah);
     }
 	

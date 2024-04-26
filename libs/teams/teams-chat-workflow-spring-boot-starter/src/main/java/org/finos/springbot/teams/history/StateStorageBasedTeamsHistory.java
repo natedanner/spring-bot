@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class StateStorageBasedTeamsHistory implements TeamsHistory {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(MessageActivityHandler.class);
+	private static final Logger LOG = LoggerFactory.getLogger(StateStorageBasedTeamsHistory.class);
 	
 	public final TeamsStateStorage tss;
 

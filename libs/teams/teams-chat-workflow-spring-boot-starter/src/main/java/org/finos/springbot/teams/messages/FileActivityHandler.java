@@ -44,7 +44,8 @@ public class FileActivityHandler extends MessageActivityHandler {
 	@Override
 	protected CompletableFuture<Void> onTeamsFileConsentAccept(TurnContext turnContext,
 			FileConsentCardResponse fileConsentCardResponse) {
-
+		LOG.info("onTeamsFileConsentAccept called...");	
+		
 		return upload(fileConsentCardResponse)
 				.thenCompose(result -> !result.result() ? fileUploadFailed(turnContext, result.value())
 						: fileUploadCompleted(turnContext, fileConsentCardResponse));
@@ -53,6 +54,7 @@ public class FileActivityHandler extends MessageActivityHandler {
 	@Override
 	protected CompletableFuture<Void> onTeamsFileConsentDecline(TurnContext turnContext,
 			FileConsentCardResponse fileConsentCardResponse) {
+		LOG.info("onTeamsFileConsentDecline called...");	
 		Map<String, String> context = (Map<String, String>) fileConsentCardResponse.getContext();
 
 		Activity reply = MessageFactory

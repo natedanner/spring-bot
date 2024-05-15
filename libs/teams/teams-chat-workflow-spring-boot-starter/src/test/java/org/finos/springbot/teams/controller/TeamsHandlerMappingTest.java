@@ -14,7 +14,7 @@ import org.finos.springbot.teams.content.TeamsChat;
 import org.finos.springbot.teams.content.TeamsMultiwayChat;
 import org.finos.springbot.teams.content.TeamsUser;
 import org.finos.springbot.teams.conversations.TeamsConversations;
-import org.finos.springbot.teams.messages.MessageActivityHandler;
+import org.finos.springbot.teams.messages.FileActivityHandler;
 import org.finos.springbot.teams.state.TeamsStateStorage;
 import org.finos.springbot.teams.turns.CurrentTurnContext;
 import org.finos.springbot.tests.controller.AbstractHandlerMappingTest;
@@ -55,6 +55,7 @@ import com.microsoft.bot.schema.Entity;
 import com.microsoft.bot.schema.Mention;
 import com.microsoft.bot.schema.ResourceResponse;
 import com.microsoft.bot.schema.teams.ChannelInfo;
+import com.microsoft.bot.schema.teams.FileConsentCard;
 import com.microsoft.bot.schema.teams.TeamsChannelData;
 
 
@@ -72,7 +73,7 @@ public class TeamsHandlerMappingTest extends AbstractHandlerMappingTest {
 	TurnContext tc;
 	
 	@Autowired
-	MessageActivityHandler mah;
+	FileActivityHandler mah;
 	
 	@Autowired
 	ChatRequestChatHandlerMapping hm;
@@ -128,7 +129,12 @@ public class TeamsHandlerMappingTest extends AbstractHandlerMappingTest {
 			
 			if (a1.getContent() instanceof String) {
 				return (String) a1.getContent();
-			} else if (a1.getContent() instanceof ObjectNode) {
+			} else if (a1.getContent() instanceof FileConsentCard) {
+				FileConsentCard f = (FileConsentCard)(a1.getContent());
+				Map<String, String> acceptContext = (Map<String, String>) f.getAcceptContext();
+				return acceptContext.get("filename");
+				
+			}else if (a1.getContent() instanceof ObjectNode) {
 				try {
 					return new ObjectMapper().writeValueAsString(a1.getContent());
 				} catch (JsonProcessingException e) {
@@ -152,7 +158,7 @@ public class TeamsHandlerMappingTest extends AbstractHandlerMappingTest {
 		s = "<span itemscope=\"\" itemtype=\"http://schema.skype.com/Mention\" itemid=\"0\">"+BOT_NAME+"</span>" + s;
 		
 		mockSetup();
-		mockTurnContext(s, null);
+		mockTurnContext(s, null, false);
 		mah.onTurn(tc);
 	}
 	
@@ -210,19 +216,19 @@ public class TeamsHandlerMappingTest extends AbstractHandlerMappingTest {
 	    return future;
 	}
 	
-	private void mockTurnContext(String s, Map<String, Object> formData) {
+	private void mockTurnContext(String s, Map<String, Object> formData, boolean isAttachement) {
 		tc = Mockito.mock(TurnContext.class);
 		CurrentTurnContext.CURRENT_CONTEXT.set(tc);
 
 		msg = ArgumentCaptor.forClass(Activity.class);
 		Mockito.when(tc.sendActivity(msg.capture())).thenReturn(CompletableFuture.completedFuture(null));
 		
-		Activity out = createActivity(s, formData);
+		Activity out = createActivity(s, formData, isAttachement);
 		Mockito.when(tc.getActivity()).thenReturn(out);
 	}
 
 
-	private Activity createActivity(String s, Map<String, Object> formData) {
+	private Activity createActivity(String s, Map<String, Object> formData, boolean isAttachement) {
 		Activity out = new Activity(ActivityTypes.MESSAGE);
 		
 		ConversationAccount conv = new ConversationAccount(CHAT_ID);
@@ -243,7 +249,22 @@ public class TeamsHandlerMappingTest extends AbstractHandlerMappingTest {
 		
 		out.setEntities(Arrays.asList(botEntity(), gauravEntity()));
 		
-		if (formData != null) {
+		
+		if(isAttachement) {
+			Attachment a = new Attachment();
+			String fileName = s;
+			Map<String, String> consentContext = new HashMap<>();
+			consentContext.put("filename", fileName);
+			FileConsentCard fileCard = new FileConsentCard();
+			fileCard.setDescription("This is the file I want to send you");			
+			fileCard.setAcceptContext(consentContext);
+			fileCard.setDeclineContext(consentContext);
+
+			a.setContent(fileCard);
+			a.setName(fileName);
+			a.setContentType(FileConsentCard.CONTENT_TYPE);
+			out.setAttachment(a);
+		} else if (formData != null) {
 			formData.put("action", s);
 			out.setValue(formData);
 		} else {
@@ -287,7 +308,7 @@ public class TeamsHandlerMappingTest extends AbstractHandlerMappingTest {
 	@Override
 	protected void pressButton(String s, Map<String, Object> formData) {
 		mockSetup();
-		mockTurnContext(s, formData);
+		mockTurnContext(s, formData, false);
 		mah.onTurn(tc);
 	}
 
@@ -321,5 +342,5 @@ public class TeamsHandlerMappingTest extends AbstractHandlerMappingTest {
 		Assertions.assertTrue(message.contains("Error123"));
 	}
 
-	
+
 }

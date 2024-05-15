@@ -10,12 +10,16 @@ import java.util.function.Function;
 
 import org.finos.springbot.teams.content.TeamsAddressable;
 import org.finos.springbot.teams.conversations.TeamsConversations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.microsoft.bot.schema.Activity;
 import com.microsoft.bot.schema.ResourceResponse;
 
 public class InMemoryRetryingActivityHandler extends AbstractRetryingActivityHandler {
 
+	protected static final Logger LOG = LoggerFactory.getLogger(InMemoryRetryingActivityHandler.class);
+	
 	static final ScheduledExecutorService SCHEDULER = new ScheduledThreadPoolExecutor(10);
 
 	public InMemoryRetryingActivityHandler(TeamsConversations tc) {
@@ -29,6 +33,9 @@ public class InMemoryRetryingActivityHandler extends AbstractRetryingActivityHan
 			f = f.thenApply(CompletableFuture::completedFuture).exceptionally(t -> {
 				if (isTooManyRequest(t)) {
 					int ra = getRetryAfter((CompletionException) t);
+					
+					LOG.info("message inserted into InMemory Retry after {} with address id {}",ra, to.getKey());
+					
 					Executor afterRetryTime = createDelayedExecutor(ra, TimeUnit.SECONDS);
 					return CompletableFuture.supplyAsync(() -> null, afterRetryTime)
 							.thenCompose(m -> tc.handleActivity(activity, to));

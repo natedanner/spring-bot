@@ -41,7 +41,7 @@ import com.azure.storage.blob.options.FindBlobsOptions;
  */
 public class AzureBlobStateStorage extends AbstractStateStorage {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(MessageActivityHandler.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AzureBlobStateStorage.class);
 	
 	private final BlobContainerClient bcc;
 	private final BlobServiceClient bsc;

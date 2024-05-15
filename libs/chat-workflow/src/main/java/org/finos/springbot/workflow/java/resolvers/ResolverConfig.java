@@ -95,12 +95,19 @@ public class ResolverConfig {
 		return new FormDataArgumentWorkflowResolverFactory();
 	}
 
+	//to get Chat button detail in controller 
+	@Bean
+	@ConditionalOnMissingBean
+	public ChatButtonWorkflowResolverFactory chatButtonWorkflowResolverFactory() {
+		return new ChatButtonWorkflowResolverFactory();
+	}
+
 	@Bean
 	@ConditionalOnMissingBean
 	public ChatVariableWorkflowResolverFactory chatVariableWorkflowResolverFactory() {
 		return new ChatVariableWorkflowResolverFactory();
 	}
-
+	
 	@Bean
 	@ConditionalOnMissingBean
 	public AddressableWorkflowResolverFactory addressableWorkflowResolverFactory() {

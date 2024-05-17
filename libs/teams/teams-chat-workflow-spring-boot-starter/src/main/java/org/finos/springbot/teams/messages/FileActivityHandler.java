@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -73,11 +74,16 @@ public class FileActivityHandler extends MessageActivityHandler {
 			LOG.info("File upload endpoint : {}", fileConsentCardResponse.getUploadInfo().getUploadUrl());
 			File filePath = new File(context.get("filepath"));
 
-			HttpURLConnection connection = null;
+			URLConnection connection = null;
 			try {
 				URL url = new URL(fileConsentCardResponse.getUploadInfo().getUploadUrl());
-				connection = (HttpURLConnection) url.openConnection();
-				connection.setRequestMethod("PUT");
+				if(url.openConnection() instanceof HttpURLConnection) {
+					connection = (HttpURLConnection) url.openConnection();
+					((HttpURLConnection) connection).setRequestMethod("PUT");
+				}else {
+					connection = (sun.net.www.protocol.file.FileURLConnection) url.openConnection();
+				}
+				
 				connection.setDoOutput(true);
 				connection.setRequestProperty("Content-Length", Long.toString(filePath.length()));
 				connection.setRequestProperty("Content-Range",
@@ -108,13 +114,19 @@ public class FileActivityHandler extends MessageActivityHandler {
 				result.set(new ResultPair<String>(false, t.getLocalizedMessage()));
 			} finally {
 				if (connection != null) {
-					connection.disconnect();
+					
+					if(connection instanceof HttpURLConnection) {
+						((HttpURLConnection) connection).disconnect();
+					}
 				}
 			}
 		}).thenApply(aVoid -> result.get());
 	}
 
 	private CompletableFuture<Void> fileUploadFailed(TurnContext turnContext, String error) {
+		
+		LOG.info("fileUploadFailed called with error {}" , error);	
+		
 		Activity reply = MessageFactory.text("<b>File upload failed.</b> Error: <pre>" + error + "</pre>");
 		reply.setTextFormat(TextFormatTypes.XML);
 		return turnContext.sendActivityBlind(reply);
@@ -129,6 +141,9 @@ public class FileActivityHandler extends MessageActivityHandler {
 
 	private CompletableFuture<Void> fileUploadCompleted(TurnContext turnContext,
 			FileConsentCardResponse fileConsentCardResponse) {
+		
+		LOG.info("file Upload Completed with unique id {} ", fileConsentCardResponse.getUploadInfo().getUniqueId());
+		
 		FileInfoCard downloadCard = new FileInfoCard();
 		downloadCard.setUniqueId(fileConsentCardResponse.getUploadInfo().getUniqueId());
 		downloadCard.setFileType(fileConsentCardResponse.getUploadInfo().getFileType());

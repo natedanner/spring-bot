@@ -77,45 +77,45 @@ public class FileActivityHandler extends MessageActivityHandler {
 			URLConnection connection = null;
 			try {
 				URL url = new URL(fileConsentCardResponse.getUploadInfo().getUploadUrl());
-				if(url.openConnection() instanceof HttpURLConnection) {
+				if (url.openConnection() instanceof HttpURLConnection) {
 					connection = (HttpURLConnection) url.openConnection();
 					((HttpURLConnection) connection).setRequestMethod("PUT");
-				}else {
-					connection = (sun.net.www.protocol.file.FileURLConnection) url.openConnection();
-				}
-				
-				connection.setDoOutput(true);
-				connection.setRequestProperty("Content-Length", Long.toString(filePath.length()));
-				connection.setRequestProperty("Content-Range",
-						String.format("bytes 0-%d/%d", filePath.length() - 1, filePath.length()));
 
-				try (FileInputStream fileStream = new FileInputStream(filePath);
-						OutputStream uploadStream = connection.getOutputStream()) {
-					byte[] buffer = new byte[4096];
-					int bytes_read;
-					while ((bytes_read = fileStream.read(buffer)) != -1) {
-						uploadStream.write(buffer, 0, bytes_read);
+					connection.setDoOutput(true);
+					connection.setRequestProperty("Content-Length", Long.toString(filePath.length()));
+					connection.setRequestProperty("Content-Range",
+							String.format("bytes 0-%d/%d", filePath.length() - 1, filePath.length()));
+
+					try (FileInputStream fileStream = new FileInputStream(filePath);
+							OutputStream uploadStream = connection.getOutputStream()) {
+						byte[] buffer = new byte[4096];
+						int bytes_read;
+						while ((bytes_read = fileStream.read(buffer)) != -1) {
+							uploadStream.write(buffer, 0, bytes_read);
+						}
+
+						uploadStream.flush();
 					}
 
-					uploadStream.flush();
-				}
-
-				try {
-					BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-					String inputLine;
-					while ((inputLine = in.readLine()) != null)
-						LOG.info(inputLine);
-					in.close();
-				} catch (Exception e) {
-					LOG.error("Exception occured while reading steam.. ignore this error " + e);
+					try {
+						BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+						String inputLine;
+						while ((inputLine = in.readLine()) != null)
+							LOG.info(inputLine);
+						in.close();
+					} catch (Exception e) {
+						LOG.error("Exception occured while reading steam.. ignore this error " + e);
+					}
 				}
 				result.set(new ResultPair<String>(true, null));
+				
 			} catch (Throwable t) {
+				t.printStackTrace();
 				result.set(new ResultPair<String>(false, t.getLocalizedMessage()));
 			} finally {
 				if (connection != null) {
-					
-					if(connection instanceof HttpURLConnection) {
+
+					if (connection instanceof HttpURLConnection) {
 						((HttpURLConnection) connection).disconnect();
 					}
 				}

@@ -54,7 +54,7 @@ public class FileActivityHandlerTest {
 		Path file = Files.createTempFile("temp-", "sample.json");
 		
 		Map<String, String> map = new HashMap<>();
-		String filePath = "file:///"+ file.toAbsolutePath().toString();
+		String filePath = "file://"+ file.toAbsolutePath().toString();
 		map.put("filepath", filePath);
 		map.put("filename", "sample.json");
 		

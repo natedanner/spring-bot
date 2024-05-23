@@ -248,3 +248,9 @@ Major release of chat workflow.  Most interfaces for this changed.  See migratio
  - #408 Handle exception for Teams 
  - #409 For Teams return conversation id on message sent
  - Release 9.0.3
+
+ # May 29 2024
+ - #421 upload attachment feature
+ - #416 Single method invoke on multiple chat button
+ - Release 9.0.4
+ 

@@ -19,7 +19,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.StreamUtils;
 import org.thymeleaf.TemplateSpec;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.StringTemplateResolver;
 

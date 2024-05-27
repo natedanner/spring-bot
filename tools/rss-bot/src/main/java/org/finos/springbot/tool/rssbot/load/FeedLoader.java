@@ -5,11 +5,6 @@ import java.net.MalformedURLException;
 import java.util.Collections;
 import java.util.List;
 
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.Response.Status.Family;
-
 import org.finos.springbot.tool.rssbot.ProxyProperties;
 import org.finos.springbot.tool.rssbot.feed.Feed;
 import org.slf4j.Logger;
@@ -20,6 +15,11 @@ import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
+
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status.Family;
 
 public class FeedLoader {
 	

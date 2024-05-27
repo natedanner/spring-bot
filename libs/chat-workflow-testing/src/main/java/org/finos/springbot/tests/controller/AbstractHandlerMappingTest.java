@@ -1,5 +1,7 @@
 package org.finos.springbot.tests.controller;
 
+
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -267,6 +269,14 @@ public abstract class AbstractHandlerMappingTest {
 		Assertions.assertEquals(45f, sc.amount);
 		Assertions.assertEquals("desc", sc.description);
 		
+	}
+	
+	@Test
+	public void testAttachmentResponse() throws Exception {
+		execute("attachment");		
+		Assertions.assertEquals("attachment", oc.lastMethod);		
+		String data = getMessageContent();		
+		Assertions.assertEquals("somefile.txt", data);
 	}
 
 }

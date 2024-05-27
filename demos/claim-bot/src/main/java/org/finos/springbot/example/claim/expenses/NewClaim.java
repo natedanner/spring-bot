@@ -1,8 +1,8 @@
 package org.finos.springbot.example.claim.expenses;
 
-import javax.validation.constraints.Min;
-
 import org.finos.springbot.workflow.annotations.Work;
+
+import jakarta.validation.constraints.Min;
 
 @Work
 public class NewClaim {

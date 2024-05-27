@@ -2,12 +2,12 @@ package org.finos.springbot.tool.poll.poll;
 
 import java.time.temporal.ChronoUnit;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
 import org.apache.commons.lang3.StringUtils;
 import org.finos.springbot.workflow.annotations.Template;
 import org.finos.springbot.workflow.annotations.Work;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 
 @Work

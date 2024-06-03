@@ -92,7 +92,7 @@ public class SymphonyHandlerMappingTest extends AbstractHandlerMappingTest {
 		oc.lastMethod = null;
 		s = s.replace("@gaurav","<span class=\"entity\" data-entity-id=\"1\">@gaurav</span>");
 		
-		Mockito.clearAllCaches();
+		Mockito.clearInvocations();
 		
 		EntityJson jsonObjects = new EntityJson();
 		jsonObjects.put("1", new SymphonyUser(123l, "gaurav", "gaurav@example.com"));
@@ -140,7 +140,7 @@ public class SymphonyHandlerMappingTest extends AbstractHandlerMappingTest {
 		oc.lastArguments = null;
 		oc.lastMethod = null;
 		
-		Mockito.clearAllCaches();
+		Mockito.clearInvocations();
 		
 		values.put("action", s);
 		

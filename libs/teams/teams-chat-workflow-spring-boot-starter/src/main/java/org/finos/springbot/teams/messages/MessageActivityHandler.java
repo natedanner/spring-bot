@@ -26,12 +26,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 
-import com.microsoft.bot.builder.ActivityHandler;
 import com.microsoft.bot.builder.TurnContext;
+import com.microsoft.bot.builder.teams.TeamsActivityHandler;
 import com.microsoft.bot.schema.Activity;
 import com.microsoft.bot.schema.Attachment;
 
-public class MessageActivityHandler extends ActivityHandler {
+public class MessageActivityHandler extends TeamsActivityHandler {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(MessageActivityHandler.class);
 	

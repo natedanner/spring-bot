@@ -3,6 +3,7 @@ package org.finos.springbot.teams.handlers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.function.BiFunction;
@@ -93,7 +94,7 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 			try {
 				if (t instanceof MessageResponse) {
 					MessageResponse mr = (MessageResponse)t;
-					Object attachment = null;
+					Attachment attachment = null;
 					MarkupAndEntities mae = messageTemplater.template(mr);
 					String content = mae.getContents();
 					List<Entity> entities = mae.getEntities();
@@ -149,10 +150,14 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 		return tt;
 	}
 
-	protected CompletableFuture<ResourceResponse> sendXMLResponse(String xml, Object attachment, TeamsAddressable address, List<Entity> entities, Map<String, Object> data) throws Exception {
+	protected CompletableFuture<ResourceResponse> sendXMLResponse(String xml, Attachment attachment, TeamsAddressable address, List<Entity> entities, Map<String, Object> data) throws Exception {
 		Activity out = Activity.createMessageActivity();
-		out.setEntities(entities);
-		out.setTextFormat(TextFormatTypes.XML);
+		if(Objects.nonNull(attachment)) {
+			out.getAttachments().add(attachment);
+		}else {
+			out.setEntities(entities);
+			out.setTextFormat(TextFormatTypes.XML);
+		}
 		out.setText(xml);
 		return ah.handleActivity(out, address);
 	}

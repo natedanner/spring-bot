@@ -40,7 +40,7 @@ jobs:
       - name: Download deps and plugins
         run: mvn de.qaware.maven:go-offline-maven-plugin:resolve-dependencies
       - name: Build
-        run: mvn install
+        run: mvn install -P symphony-ci
       - name: Test Summary
         uses: test-summary/action@v1
         with:

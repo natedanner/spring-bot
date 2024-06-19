@@ -52,6 +52,10 @@
 	        		<groupId>com.google.guava</groupId>
 	        		<artifactId>guava</artifactId>
 	        	</exclusion>
+	        	<exclusion>
+	        		<groupId>org.apache.httpcomponents</groupId>
+	        		<artifactId>httpclient</artifactId>
+	        	</exclusion>
 	        </exclusions>
       	</dependency>
 		<dependency>
@@ -68,6 +72,10 @@
 					<groupId>com.google.guava</groupId>
 					<artifactId>guava</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>com.nimbusds</groupId>
+					<artifactId>nimbus-jose-jwt</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		
@@ -75,7 +83,36 @@
 			<groupId>com.azure</groupId>
 	  		<artifactId>azure-storage-blob</artifactId>
 	  		<version>${azure-storage-blob.version}</version>
-  		</dependency>
+	  		<exclusions>
+	  			<exclusion>
+	  				<groupId>com.azure</groupId>
+	  				<artifactId>azure-core</artifactId>
+	  			</exclusion>
+	  			<exclusion>
+	  				<groupId>com.azure</groupId>
+	  				<artifactId>azure-core-http-netty</artifactId>
+	  			</exclusion>
+	  		</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.azure</groupId>
+	  		<artifactId>azure-core-http-netty</artifactId>	
+	  		<version>${azure-core-http-netty.version}</version>	
+		</dependency>
+
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>	
+	  		<version>${nimbus-jose-jwt.version}</version>	
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+	    	<artifactId>httpclient</artifactId>
+	    	<version>${httpclient.version}</version>
+		</dependency>
+					
 		<!-- removed Vulnerability in bot connector(4.14.3) ->
 		 okttp(3.12.2) -> change version of okio jvm to 3.4.0 -->
 		<dependency>

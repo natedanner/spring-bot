@@ -69,7 +69,10 @@
 		<graalvm.version>23.0.3</graalvm.version>
 		<symphony-bdk.version>3.0.0</symphony-bdk.version>
 		<!--<mimepull.version>1.9.15</mimepull.version>-->
-		<!--<thymeleaf.version>2.7.0</thymeleaf.version>-->
+		<!--<thymeleaf.version>2.7.0</thymeleaf.version>-->	
+		<azure-core-http-netty.version>1.9.1</azure-core-http-netty.version>	
+		<nimbus-jose-jwt.version>9.9.1</nimbus-jose-jwt.version>	
+		<httpclient.version>4.5.13</httpclient.version>			
 	</properties>
 
 	<licenses>

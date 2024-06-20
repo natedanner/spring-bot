@@ -1,0 +1,161 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>teams-chat-workflow-spring-boot-starter</artifactId>
+	<name>Spring Boot Starter For Chat Workflow Microsoft Teams Adapter</name>
+	<description>Build Workflows Using Enterprise Chat</description>
+
+	<parent>
+		<groupId>org.finos.springbot</groupId>
+		<artifactId>spring-bot</artifactId>
+		<version>9.0.5-SNAPSHOT</version>
+		<relativePath>../../..</relativePath>
+	</parent>
+
+	<properties>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.finos.springbot</groupId>
+			<artifactId>chat-workflow</artifactId>
+			<version>9.0.5-SNAPSHOT</version>
+		</dependency>
+
+		<!-- teams -->
+		<dependency>
+			<groupId>com.microsoft.bot</groupId>
+			<artifactId>bot-integration-spring</artifactId>
+			<version>${teams.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+	        <groupId>com.microsoft.bot</groupId>
+	        <artifactId>bot-azure</artifactId>
+	        <version>${teams.version}</version>
+	        <scope>compile</scope>
+	        <exclusions>
+	        	<!-- this is already included by spring -->
+	        	<exclusion>
+	        		<groupId>org.json</groupId>
+	        		<artifactId>json</artifactId>
+	        	</exclusion>
+	        	<exclusion>
+	        		<groupId>com.azure</groupId>
+	        		<artifactId>azure-storage-blob</artifactId>
+	        	</exclusion>
+	        	<exclusion>
+	        		<groupId>com.google.guava</groupId>
+	        		<artifactId>guava</artifactId>
+	        	</exclusion>
+	        	<exclusion>
+	        		<groupId>org.apache.httpcomponents</groupId>
+	        		<artifactId>httpclient</artifactId>
+	        	</exclusion>
+	        </exclusions>
+      	</dependency>
+		<dependency>
+			<groupId>com.microsoft.bot</groupId>
+			<artifactId>bot-builder</artifactId>
+			<version>${teams.version}</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.squareup.okio</groupId>
+					<artifactId>okio-jvm</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.nimbusds</groupId>
+					<artifactId>nimbus-jose-jwt</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.azure</groupId>
+	  		<artifactId>azure-storage-blob</artifactId>
+	  		<version>12.25.3</version>
+	  		<exclusions>	  			
+	  			<exclusion>
+	  				<groupId>com.azure</groupId>
+	  				<artifactId>azure-core-http-netty</artifactId>
+	  			</exclusion>
+	  		</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.azure</groupId>
+	  		<artifactId>azure-core-http-netty</artifactId>	
+	  		<version>1.14.1</version>	
+		</dependency>
+
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>	
+	  		<version>9.9.1</version>	
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+	    	<artifactId>httpclient</artifactId>
+	    	<version>4.5.13</version>
+		</dependency>
+					
+		<!-- removed Vulnerability in bot connector(4.14.3) ->
+		 okttp(3.12.2) -> change version of okio jvm to 3.4.0 -->
+		<dependency>
+			<groupId>com.squareup.okio</groupId>
+			<artifactId>okio-jvm</artifactId>
+			<version>${okio-jvm.version}</version>	
+		</dependency>	
+		
+		<!-- for parsing html sent to bot -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>${jsoup.version}</version>
+		</dependency>
+
+		<!-- for templating adaptive cards -->
+		<dependency>
+			<groupId>org.graalvm.js</groupId>
+			<artifactId>js</artifactId>
+			<version>${graalvm.version}</version>
+		</dependency>
+		
+		<!-- for templating xml/html @work
+		thymeleaf.spring5 doesn't support in spring 3.x.x' -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.google.guava</groupId>
+	        <artifactId>guava</artifactId>
+	        <version>${guava.version}</version>
+		</dependency>
+
+		<!-- for testing -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.finos.springbot</groupId>
+			<artifactId>chat-workflow-testing</artifactId>
+			<version>9.0.5-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+</project>

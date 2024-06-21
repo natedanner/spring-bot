@@ -73,6 +73,8 @@
 		<azure-core-http-netty.version>1.9.1</azure-core-http-netty.version>	
 		<nimbus-jose-jwt.version>9.9.1</nimbus-jose-jwt.version>	
 		<httpclient.version>4.5.13</httpclient.version>			
+		<corenlp.version>4.5.7</corenlp.version>
+		<azure-storage-blob.version>12.25.3</azure-storage-blob.version>
 	</properties>
 
 	<licenses>

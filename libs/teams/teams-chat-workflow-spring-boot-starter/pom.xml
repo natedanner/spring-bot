@@ -82,12 +82,8 @@
 		<dependency>
 			<groupId>com.azure</groupId>
 	  		<artifactId>azure-storage-blob</artifactId>
-	  		<version>${azure-storage-blob.version}</version>
-	  		<exclusions>
-	  			<exclusion>
-	  				<groupId>com.azure</groupId>
-	  				<artifactId>azure-core</artifactId>
-	  			</exclusion>
+	  		<version>12.25.3</version> <!-- Replace with property -->
+	  		<exclusions>	  			
 	  			<exclusion>
 	  				<groupId>com.azure</groupId>
 	  				<artifactId>azure-core-http-netty</artifactId>
@@ -98,19 +94,19 @@
 		<dependency>
 			<groupId>com.azure</groupId>
 	  		<artifactId>azure-core-http-netty</artifactId>	
-	  		<version>${azure-core-http-netty.version}</version>	
+	  		<version>1.14.1</version>	<!-- Replace with property -->
 		</dependency>
 
 		<dependency>
 			<groupId>com.nimbusds</groupId>
 			<artifactId>nimbus-jose-jwt</artifactId>	
-	  		<version>${nimbus-jose-jwt.version}</version>	
+	  		<version>9.9.1</version>	<!-- Replace with property -->
 		</dependency>
 		
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 	    	<artifactId>httpclient</artifactId>
-	    	<version>${httpclient.version}</version>
+	    	<version>4.5.13</version> <!-- Replace with property -->
 		</dependency>
 					
 		<!-- removed Vulnerability in bot connector(4.14.3) ->
@@ -163,3 +159,6 @@
 	</dependencies>
 
 </project>
+
+
+

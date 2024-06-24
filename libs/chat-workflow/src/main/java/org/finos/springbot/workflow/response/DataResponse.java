@@ -17,11 +17,26 @@ public class DataResponse implements Response {
 	private final String templateName;
 	private final Addressable to;
 
+	private String summary;
+
 	public DataResponse(Addressable to, Map<String, Object> data, String templateName) {
 		super();
 		this.to = to;
 		this.data = data;
 		this.templateName = templateName;
+	}
+
+	public DataResponse(Addressable to, Map<String, Object> data, String templateName, String summary) {
+		this(to,data,templateName);
+		this.summary = summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public String getSummary() {
+		return summary;
 	}
 
 	public Map<String, Object> getData() {

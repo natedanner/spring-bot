@@ -25,7 +25,10 @@ public class MessageResponse extends DataResponse {
 	public MessageResponse(Addressable stream, String textContent) {
 		this(stream, Message.of(textContent));
 	}
-	
+	public MessageResponse(Addressable stream, String textContent, String responseSummary) {
+		this(stream, Message.of(textContent));
+		setSummary(responseSummary);
+	}
 
 	public MessageResponse(Addressable stream, Content m) {
 		super(stream, new HashMap<>(), null);

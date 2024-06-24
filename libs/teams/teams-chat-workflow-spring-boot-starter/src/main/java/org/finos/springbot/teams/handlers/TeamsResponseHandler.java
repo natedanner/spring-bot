@@ -8,6 +8,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.function.BiFunction;
 
+import org.apache.commons.lang3.StringUtils;
 import org.finos.springbot.teams.TeamsException;
 import org.finos.springbot.teams.content.TeamsAddressable;
 import org.finos.springbot.teams.conversations.TeamsErrorResourceResponse;
@@ -103,7 +104,7 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 						attachment = attachmentHandler.formatAttachment((AttachmentResponse) mr);
 					}
 					
-					return sendXMLResponse(content, attachment, ta, entities, mr.getData())
+					return sendXMLResponse(content, attachment, ta, entities, mr.getData(), mr.getSummary())
 						.handle(handleErrorAndStorage(content, ta, mr.getData(), t)).get();
 					
 				} else if (t instanceof WorkResponse) {
@@ -112,13 +113,13 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
  					 
 					if (tt == TemplateType.ADAPTIVE_CARD) {
 						JsonNode cardJson = workTemplater.template(wr);
-						return sendCardResponse(cardJson, ta, wr.getData())
+						return sendCardResponse(cardJson, ta, wr.getData(), wr.getSummary())
 							.handle(handleErrorAndStorage(cardJson, ta, wr.getData(), t)).get();
 					} else {
 						MarkupAndEntities mae = displayTemplater.template(wr);
 						String content = mae.getContents();
 						List<Entity> entities = mae.getEntities();
-						return sendXMLResponse(content, null, ta, entities, wr.getData())
+						return sendXMLResponse(content, null, ta, entities, wr.getData(), wr.getSummary())
 							.handle(handleButtonsIfNeeded(tt, wr))
 							.handle(handleErrorAndStorage(content, ta, wr.getData(), t)).get();
 						
@@ -150,11 +151,12 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 		return tt;
 	}
 
-	protected CompletableFuture<ResourceResponse> sendXMLResponse(String xml, Attachment attachment, TeamsAddressable address, List<Entity> entities, Map<String, Object> data) throws Exception {
+	protected CompletableFuture<ResourceResponse> sendXMLResponse(String xml, Attachment attachment, TeamsAddressable address, List<Entity> entities, Map<String, Object> data, String summary) throws Exception {
 		Activity out = Activity.createMessageActivity();
 		if(Objects.nonNull(attachment)) {
 			out.getAttachments().add(attachment);
 		}else {
+			if(StringUtils.isNotBlank(summary)) out.setSummary(summary);
 			out.setEntities(entities);
 			out.setTextFormat(TextFormatTypes.XML);
 		}
@@ -171,7 +173,7 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 						JsonNode buttonsJson = workTemplater.template(null);
 						wr.getData().put(AdaptiveCardTemplateProvider.FORMID_KEY, "just-buttons");
 						JsonNode expandedJson = workTemplater.applyTemplate(buttonsJson, wr);
-						return sendCardResponse(expandedJson, (TeamsAddressable) wr.getAddress(), wr.getData()).get();
+						return sendCardResponse(expandedJson, (TeamsAddressable) wr.getAddress(), wr.getData(), wr.getSummary()).get();
 					} else {						
 						return rr;
 					}
@@ -219,11 +221,12 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 			};
 	}
 	
-	protected CompletableFuture<ResourceResponse> sendCardResponse(JsonNode json, TeamsAddressable address, Map<String, Object> data) throws Exception {		
+	protected CompletableFuture<ResourceResponse> sendCardResponse(JsonNode json, TeamsAddressable address, Map<String, Object> data, String summary) throws Exception {
 		Activity out = Activity.createMessageActivity();
 		Attachment body = new Attachment();
 		body.setContentType("application/vnd.microsoft.card.adaptive");
 		body.setContent(json);
+		if(StringUtils.isNotBlank(summary)) out.setSummary(summary);
 		out.getAttachments().add(body);
 		return ah.handleActivity(out, address);
 	}

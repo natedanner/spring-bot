@@ -24,7 +24,6 @@ public class WorkResponse extends DataResponse {
 	public static final String DEFAULT_FORM_TEMPLATE_VIEW = "default-view";
 	public static final String ERRORS_KEY = "errors";
 	public static final String OBJECT_KEY = "form";
-	
 	private final WorkMode mode;
 	private final Class<?> formClass;
 	
@@ -43,6 +42,11 @@ public class WorkResponse extends DataResponse {
 	
 	public WorkResponse(Addressable to, Object o, WorkMode m) {
 		this(to, o, m, null, null);
+	}
+
+	public WorkResponse(Addressable to, Object o, WorkMode m, String responseSummary){
+		this(to,o,m);
+		setSummary(responseSummary);
 	}
 	
 	public static Map<String, Object> createEntityMap(Object o, ButtonList buttons, ErrorMap errors) {

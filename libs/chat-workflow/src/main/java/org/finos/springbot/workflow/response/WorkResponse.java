@@ -1,8 +1,5 @@
 package org.finos.springbot.workflow.response;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.finos.springbot.workflow.annotations.Template;
 import org.finos.springbot.workflow.annotations.WorkMode;
 import org.finos.springbot.workflow.content.Addressable;
@@ -10,6 +7,9 @@ import org.finos.springbot.workflow.form.ButtonList;
 import org.finos.springbot.workflow.form.ErrorMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Returns @Work-annotated object back to the user, either as form if editable=true, or 
@@ -42,11 +42,6 @@ public class WorkResponse extends DataResponse {
 	
 	public WorkResponse(Addressable to, Object o, WorkMode m) {
 		this(to, o, m, null, null);
-	}
-
-	public WorkResponse(Addressable to, Object o, WorkMode m, String responseSummary){
-		this(to,o,m);
-		setSummary(responseSummary);
 	}
 	
 	public static Map<String, Object> createEntityMap(Object o, ButtonList buttons, ErrorMap errors) {

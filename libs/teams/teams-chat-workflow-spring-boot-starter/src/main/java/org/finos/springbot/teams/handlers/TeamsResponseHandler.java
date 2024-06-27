@@ -1,13 +1,11 @@
 package org.finos.springbot.teams.handlers;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
-import java.util.function.BiFunction;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.microsoft.bot.connector.rest.ErrorResponseException;
+import com.microsoft.bot.schema.*;
 import org.apache.commons.lang3.StringUtils;
 import org.finos.springbot.teams.TeamsException;
 import org.finos.springbot.teams.content.TeamsAddressable;
@@ -23,12 +21,10 @@ import org.finos.springbot.teams.templating.thymeleaf.ThymeleafTemplateProvider;
 import org.finos.springbot.workflow.actions.Action;
 import org.finos.springbot.workflow.actions.ErrorAction;
 import org.finos.springbot.workflow.annotations.WorkMode;
-import org.finos.springbot.workflow.response.AttachmentResponse;
 import org.finos.springbot.workflow.response.ErrorResponse;
-import org.finos.springbot.workflow.response.MessageResponse;
-import org.finos.springbot.workflow.response.Response;
-import org.finos.springbot.workflow.response.WorkResponse;
+import org.finos.springbot.workflow.response.*;
 import org.finos.springbot.workflow.response.handlers.ResponseHandler;
+import org.finos.springbot.workflow.response.templating.TeamsWorkResponse;
 import org.finos.springbot.workflow.tags.HeaderDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,16 +33,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.ErrorHandler;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.microsoft.bot.connector.rest.ErrorResponseException;
-import com.microsoft.bot.schema.Activity;
-import com.microsoft.bot.schema.Attachment;
-import com.microsoft.bot.schema.Entity;
-import com.microsoft.bot.schema.ResourceResponse;
-import com.microsoft.bot.schema.TextFormatTypes;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.function.BiFunction;
 
 public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, ApplicationContextAware {
 	
@@ -104,7 +94,7 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 						attachment = attachmentHandler.formatAttachment((AttachmentResponse) mr);
 					}
 					
-					return sendXMLResponse(content, attachment, ta, entities, mr.getData(), mr.getSummary())
+					return sendXMLResponse(content, attachment, ta, entities, mr.getData())
 						.handle(handleErrorAndStorage(content, ta, mr.getData(), t)).get();
 					
 				} else if (t instanceof WorkResponse) {
@@ -113,13 +103,14 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
  					 
 					if (tt == TemplateType.ADAPTIVE_CARD) {
 						JsonNode cardJson = workTemplater.template(wr);
-						return sendCardResponse(cardJson, ta, wr.getData(), wr.getSummary())
+						Optional<String> responseSummaryOptional = t instanceof TeamsWorkResponse ? Optional.of(((TeamsWorkResponse) t).getSummary()) : Optional.empty() ;
+						return sendCardResponse(cardJson, ta, wr.getData(), responseSummaryOptional)
 							.handle(handleErrorAndStorage(cardJson, ta, wr.getData(), t)).get();
 					} else {
 						MarkupAndEntities mae = displayTemplater.template(wr);
 						String content = mae.getContents();
 						List<Entity> entities = mae.getEntities();
-						return sendXMLResponse(content, null, ta, entities, wr.getData(), wr.getSummary())
+						return sendXMLResponse(content, null, ta, entities, wr.getData())
 							.handle(handleButtonsIfNeeded(tt, wr))
 							.handle(handleErrorAndStorage(content, ta, wr.getData(), t)).get();
 						
@@ -151,12 +142,11 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 		return tt;
 	}
 
-	protected CompletableFuture<ResourceResponse> sendXMLResponse(String xml, Attachment attachment, TeamsAddressable address, List<Entity> entities, Map<String, Object> data, String summary) throws Exception {
+	protected CompletableFuture<ResourceResponse> sendXMLResponse(String xml, Attachment attachment, TeamsAddressable address, List<Entity> entities, Map<String, Object> data) throws Exception {
 		Activity out = Activity.createMessageActivity();
 		if(Objects.nonNull(attachment)) {
 			out.getAttachments().add(attachment);
 		}else {
-			if(StringUtils.isNotBlank(summary)) out.setSummary(summary);
 			out.setEntities(entities);
 			out.setTextFormat(TextFormatTypes.XML);
 		}
@@ -173,7 +163,8 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 						JsonNode buttonsJson = workTemplater.template(null);
 						wr.getData().put(AdaptiveCardTemplateProvider.FORMID_KEY, "just-buttons");
 						JsonNode expandedJson = workTemplater.applyTemplate(buttonsJson, wr);
-						return sendCardResponse(expandedJson, (TeamsAddressable) wr.getAddress(), wr.getData(), wr.getSummary()).get();
+						Optional<String> responseSummaryOptional = wr instanceof TeamsWorkResponse ? Optional.of(((TeamsWorkResponse) wr).getSummary()) : Optional.empty() ;
+						return sendCardResponse(expandedJson, (TeamsAddressable) wr.getAddress(), wr.getData(), responseSummaryOptional).get();
 					} else {						
 						return rr;
 					}
@@ -221,12 +212,13 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 			};
 	}
 	
-	protected CompletableFuture<ResourceResponse> sendCardResponse(JsonNode json, TeamsAddressable address, Map<String, Object> data, String summary) throws Exception {
+	protected CompletableFuture<ResourceResponse> sendCardResponse(JsonNode json, TeamsAddressable address, Map<String, Object> data, Optional<String> summaryOptional) throws Exception {
 		Activity out = Activity.createMessageActivity();
 		Attachment body = new Attachment();
 		body.setContentType("application/vnd.microsoft.card.adaptive");
 		body.setContent(json);
-		if(StringUtils.isNotBlank(summary)) out.setSummary(summary);
+		if(summaryOptional.isPresent() && StringUtils.isNotBlank(summaryOptional.get()))
+			out.setSummary(summaryOptional.get());
 		out.getAttachments().add(body);
 		return ah.handleActivity(out, address);
 	}

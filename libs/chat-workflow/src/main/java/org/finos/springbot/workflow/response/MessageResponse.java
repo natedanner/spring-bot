@@ -1,11 +1,11 @@
 package org.finos.springbot.workflow.response;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.finos.springbot.workflow.content.Addressable;
 import org.finos.springbot.workflow.content.Content;
 import org.finos.springbot.workflow.content.Message;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A Response that includes a message {@link Content} to send back to the user.
@@ -25,6 +25,7 @@ public class MessageResponse extends DataResponse {
 	public MessageResponse(Addressable stream, String textContent) {
 		this(stream, Message.of(textContent));
 	}
+	
 
 	public MessageResponse(Addressable stream, Content m) {
 		super(stream, new HashMap<>(), null);

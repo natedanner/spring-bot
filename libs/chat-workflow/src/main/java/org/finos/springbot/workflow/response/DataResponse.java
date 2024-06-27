@@ -1,9 +1,9 @@
 package org.finos.springbot.workflow.response;
 
+import java.util.Map;
+
 import org.finos.springbot.workflow.content.Addressable;
 import org.finos.springbot.workflow.response.handlers.ResponseHandler;
-
-import java.util.Map;
 
 /**
  * A Response that contains some JSON data to be included in the message.

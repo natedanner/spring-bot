@@ -1,5 +1,8 @@
 package org.finos.springbot.workflow.response;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.finos.springbot.workflow.annotations.Template;
 import org.finos.springbot.workflow.annotations.WorkMode;
 import org.finos.springbot.workflow.content.Addressable;
@@ -7,9 +10,6 @@ import org.finos.springbot.workflow.form.ButtonList;
 import org.finos.springbot.workflow.form.ErrorMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Returns @Work-annotated object back to the user, either as form if editable=true, or 
@@ -24,6 +24,7 @@ public class WorkResponse extends DataResponse {
 	public static final String DEFAULT_FORM_TEMPLATE_VIEW = "default-view";
 	public static final String ERRORS_KEY = "errors";
 	public static final String OBJECT_KEY = "form";
+	
 	private final WorkMode mode;
 	private final Class<?> formClass;
 	

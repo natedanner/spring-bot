@@ -5,15 +5,16 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.apache.connector.ApacheConnectorProvider;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
+
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.Response;
 
 /**
  * Provides a basic Jersey client creation wrapper which includes:
@@ -65,7 +66,7 @@ public class JerseyApiBuilder extends AbstractApiBuilder {
 
 	protected void registerFeatures(JerseyClientBuilder jcb) {
 		jcb.register(MultiPartFeature.class);
-		jcb.register(LenientJacksonJsonProvider.class);
+		//jcb.register(LenientJacksonJsonProvider.class);
 	}
 
 	protected SSLContext createSSLContext() throws NoSuchAlgorithmException, KeyManagementException {

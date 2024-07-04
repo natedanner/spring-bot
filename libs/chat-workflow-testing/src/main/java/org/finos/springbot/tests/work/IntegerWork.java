@@ -1,9 +1,9 @@
 package org.finos.springbot.tests.work;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
 import org.finos.springbot.workflow.annotations.Work;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 @Work
 public class IntegerWork {

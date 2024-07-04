@@ -1,12 +1,11 @@
 package org.finos.springbot.symphony.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.symphony.bdk.core.service.message.MessageService;
-import com.symphony.bdk.core.service.message.model.Attachment;
-import com.symphony.bdk.gen.api.model.*;
-import com.symphony.bdk.spring.events.RealTimeEvent;
+import static org.mockito.Mockito.atMost;
+
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
+
 import org.finos.springbot.entityjson.EntityJson;
 import org.finos.springbot.symphony.SymphonyMockConfiguration;
 import org.finos.springbot.symphony.SymphonyWorkflowConfig;
@@ -36,11 +35,20 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.StreamUtils;
 
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.symphony.bdk.core.service.message.MessageService;
+import com.symphony.bdk.core.service.message.model.Attachment;
+import com.symphony.bdk.gen.api.model.StreamType;
+import com.symphony.bdk.gen.api.model.V4Initiator;
+import com.symphony.bdk.gen.api.model.V4Message;
+import com.symphony.bdk.gen.api.model.V4MessageSent;
+import com.symphony.bdk.gen.api.model.V4Stream;
+import com.symphony.bdk.gen.api.model.V4SymphonyElementsAction;
+import com.symphony.bdk.gen.api.model.V4User;
+import com.symphony.bdk.spring.events.RealTimeEvent;
 
-import static org.mockito.Mockito.atMost;
 
 
 @SpringBootTest(classes = {
@@ -84,7 +92,7 @@ public class SymphonyHandlerMappingTest extends AbstractHandlerMappingTest {
 		oc.lastMethod = null;
 		s = s.replace("@gaurav","<span class=\"entity\" data-entity-id=\"1\">@gaurav</span>");
 		
-		Mockito.clearAllCaches();
+		Mockito.clearInvocations();
 		
 		EntityJson jsonObjects = new EntityJson();
 		jsonObjects.put("1", new SymphonyUser(123l, "gaurav", "gaurav@example.com"));
@@ -132,7 +140,7 @@ public class SymphonyHandlerMappingTest extends AbstractHandlerMappingTest {
 		oc.lastArguments = null;
 		oc.lastMethod = null;
 		
-		Mockito.clearAllCaches();
+		Mockito.clearInvocations();
 		
 		values.put("action", s);
 		

@@ -1,9 +1,9 @@
 package org.finos.springbot.tests.work;
 
-import javax.validation.constraints.Pattern;
-
 import org.finos.springbot.workflow.annotations.Work;
 import org.hibernate.validator.constraints.Length;
+
+import jakarta.validation.constraints.Pattern;
 
 @Work
 public class StringWork {

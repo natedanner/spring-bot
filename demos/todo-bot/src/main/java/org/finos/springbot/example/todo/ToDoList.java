@@ -6,10 +6,10 @@ package org.finos.springbot.example.todo;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.finos.springbot.workflow.annotations.RequiresUserList;
 import org.finos.springbot.workflow.annotations.Work;
+
+import jakarta.validation.Valid;
 
 /**
  * @author rupnsur

@@ -1,9 +1,9 @@
 package org.finos.springbot.symphony.json;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
-
 import org.finos.springbot.workflow.annotations.Work;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 
 @Work()
 public class TestBean {

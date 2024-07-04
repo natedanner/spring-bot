@@ -3,9 +3,9 @@ package org.finos.springbot.symphony.history;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.finos.springbot.workflow.annotations.Work;
+
+import jakarta.validation.Valid;
 
 @Work()
 public class TestObjects {

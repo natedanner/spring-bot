@@ -9,8 +9,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.Properties;
 
-import javax.annotation.PostConstruct;
-
 import org.finos.springbot.workflow.actions.Action;
 import org.finos.springbot.workflow.actions.SimpleMessageAction;
 import org.finos.springbot.workflow.actions.consumers.AbstractActionConsumer;
@@ -31,6 +29,7 @@ import edu.stanford.nlp.pipeline.CoreEntityMention;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.time.TimeAnnotations;
 import edu.stanford.nlp.time.Timex;
+import jakarta.annotation.PostConstruct;
 
 public class TimeFinder extends AbstractActionConsumer  {
 

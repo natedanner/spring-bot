@@ -1,6 +1,5 @@
 package org.finos.springbot.tool.rssbot.load;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 /**
@@ -12,11 +11,11 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
  * @author robmoffat
  *
  */
-public class LenientJacksonJsonProvider extends JacksonJsonProvider {
-
-	public LenientJacksonJsonProvider() {
-		super();
-		configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	}
-
-}
+/*
+ * public class LenientJacksonJsonProvider extends JacksonJsonProvider {
+ * 
+ * public LenientJacksonJsonProvider() { super();
+ * //configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); }
+ * 
+ * }
+ */

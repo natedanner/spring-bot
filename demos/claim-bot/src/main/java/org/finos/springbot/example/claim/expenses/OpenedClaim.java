@@ -1,11 +1,11 @@
 package org.finos.springbot.example.claim.expenses;
 
-import javax.validation.constraints.Min;
-
 import org.finos.springbot.workflow.actions.Action;
 import org.finos.springbot.workflow.annotations.Display;
 import org.finos.springbot.workflow.annotations.Work;
 import org.finos.springbot.workflow.content.User;
+
+import jakarta.validation.constraints.Min;
 
 @Work
 public class OpenedClaim {

@@ -103,7 +103,8 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
  					 
 					if (tt == TemplateType.ADAPTIVE_CARD) {
 						JsonNode cardJson = workTemplater.template(wr);
-						Optional<String> responseSummaryOptional = t instanceof TeamsWorkResponse ? Optional.of(((TeamsWorkResponse) t).getSummary()) : Optional.empty() ;
+						Optional<String> responseSummaryOptional = t instanceof TeamsWorkResponse ? Optional.ofNullable(((TeamsWorkResponse) t).getSummary()) : Optional.empty() ;
+
 						return sendCardResponse(cardJson, ta, wr.getData(), responseSummaryOptional)
 							.handle(handleErrorAndStorage(cardJson, ta, wr.getData(), t)).get();
 					} else {
@@ -163,7 +164,7 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 						JsonNode buttonsJson = workTemplater.template(null);
 						wr.getData().put(AdaptiveCardTemplateProvider.FORMID_KEY, "just-buttons");
 						JsonNode expandedJson = workTemplater.applyTemplate(buttonsJson, wr);
-						Optional<String> responseSummaryOptional = wr instanceof TeamsWorkResponse ? Optional.of(((TeamsWorkResponse) wr).getSummary()) : Optional.empty() ;
+						Optional<String> responseSummaryOptional = wr instanceof TeamsWorkResponse ? Optional.ofNullable(((TeamsWorkResponse) wr).getSummary()) : Optional.empty() ;
 						return sendCardResponse(expandedJson, (TeamsAddressable) wr.getAddress(), wr.getData(), responseSummaryOptional).get();
 					} else {						
 						return rr;

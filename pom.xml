@@ -3,7 +3,7 @@
 
 	<groupId>org.finos.springbot</groupId>
 	<artifactId>spring-bot</artifactId>
-	<version>9.0.5-SNAPSHOT</version>
+	<version>10.0.1-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
 	<name>Spring Bot</name>
@@ -276,4 +276,11 @@
 				
 		</dependencies>
 	</dependencyManagement>
+
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+	</distributionManagement>
 </project>

@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.finos.springbot</groupId>
 		<artifactId>spring-bot</artifactId>
-		<version>9.0.5-SNAPSHOT</version>
+		<version>10.0.1-SNAPSHOT</version>
 		<relativePath>../../..</relativePath>
 	</parent>
 
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>org.finos.springbot</groupId>
 			<artifactId>chat-workflow</artifactId>
-			<version>9.0.5-SNAPSHOT</version>
+			<version>10.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<!-- teams -->
@@ -52,6 +52,10 @@
 	        		<groupId>com.google.guava</groupId>
 	        		<artifactId>guava</artifactId>
 	        	</exclusion>
+	        	<exclusion>
+	        		<groupId>org.apache.httpcomponents</groupId>
+	        		<artifactId>httpclient</artifactId>
+	        	</exclusion>
 	        </exclusions>
       	</dependency>
 		<dependency>
@@ -68,14 +72,43 @@
 					<groupId>com.google.guava</groupId>
 					<artifactId>guava</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>com.nimbusds</groupId>
+					<artifactId>nimbus-jose-jwt</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.azure</groupId>
 	  		<artifactId>azure-storage-blob</artifactId>
-	  		<version>${azure-storage-blob.version}</version>
-  		</dependency>
+	  		<version>12.25.3</version> <!-- Replace with property -->
+	  		<exclusions>	  			
+	  			<exclusion>
+	  				<groupId>com.azure</groupId>
+	  				<artifactId>azure-core-http-netty</artifactId>
+	  			</exclusion>
+	  		</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.azure</groupId>
+	  		<artifactId>azure-core-http-netty</artifactId>	
+	  		<version>1.14.1</version>	<!-- Replace with property -->
+		</dependency>
+
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>	
+	  		<version>9.37.2</version>	<!-- Replace with property -->
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+	    	<artifactId>httpclient</artifactId>
+	    	<version>4.5.13</version> <!-- Replace with property -->
+		</dependency>
+					
 		<!-- removed Vulnerability in bot connector(4.14.3) ->
 		 okttp(3.12.2) -> change version of okio jvm to 3.4.0 -->
 		<dependency>
@@ -120,9 +153,12 @@
 		<dependency>
 			<groupId>org.finos.springbot</groupId>
 			<artifactId>chat-workflow-testing</artifactId>
-			<version>9.0.5-SNAPSHOT</version>
+			<version>10.0.1-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
 </project>
+
+
+

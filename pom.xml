@@ -3,7 +3,7 @@
 
 	<groupId>org.finos.springbot</groupId>
 	<artifactId>spring-bot</artifactId>
-	<version>9.0.5-SNAPSHOT</version>
+	<version>10.0.1-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
 	<name>Spring Bot</name>
@@ -49,7 +49,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring-boot.version>3.1.8</spring-boot.version>
+		<spring-boot.version>3.3.0</spring-boot.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<java.version>17</java.version>
@@ -69,7 +69,12 @@
 		<graalvm.version>23.0.3</graalvm.version>
 		<symphony-bdk.version>3.0.0</symphony-bdk.version>
 		<!--<mimepull.version>1.9.15</mimepull.version>-->
-		<!--<thymeleaf.version>2.7.0</thymeleaf.version>-->
+		<!--<thymeleaf.version>2.7.0</thymeleaf.version>-->	
+		<azure-core-http-netty.version>1.9.1</azure-core-http-netty.version>	
+		<nimbus-jose-jwt.version>9.9.1</nimbus-jose-jwt.version>	
+		<httpclient.version>4.5.13</httpclient.version>			
+		<corenlp.version>4.5.7</corenlp.version>
+		<azure-storage-blob.version>12.25.3</azure-storage-blob.version>
 	</properties>
 
 	<licenses>
@@ -183,7 +188,7 @@
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.8.2</version>
+						<version>0.8.12</version>
 						<executions>
 							<execution>
 								<goals>
@@ -271,4 +276,11 @@
 				
 		</dependencies>
 	</dependencyManagement>
+
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+	</distributionManagement>
 </project>

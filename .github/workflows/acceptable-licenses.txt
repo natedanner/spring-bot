@@ -21,12 +21,14 @@
 <name>Dual license consisting of the CDDL v1.1 and GPL v2</name>
 <name>EDL 1.0</name>
 <name>EPL 2.0</name>
+<name>EPL-2.0</name>
 <name>Eclipse Distribution License - v 1.0</name>
 <name>Eclipse Public License - v 1.0</name>
 <name>Eclipse Public License - v 2.0</name>
 <name>Eclipse Public License v2.0</name>
 <name>GNU Lesser General Public License</name>
 <name>GPL2 w/ CPE</name>
+<name>GPL-2.0-with-classpath-exception</name>
 <name>LGPL 2.1</name>
 <name>MIT License</name>
 <name>MIT license</name>
@@ -39,6 +41,7 @@
 <name>The Apache License, Version 2.0</name>
 <name>The Apache Software License, Version 2.0</name>
 <name>The BSD License</name>
+<name>The BSD 2-Clause License</name>
 <name>The GNU Lesser General Public License, Version 2.1</name>
 <name>The MIT License (MIT)</name>
 <name>The MIT License</name>

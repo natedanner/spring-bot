@@ -1,4 +1,4 @@
-package org.finos.springbot.workflow.response.templating;
+package org.finos.springbot.teams.response;
 
 import org.finos.springbot.workflow.annotations.WorkMode;
 import org.finos.springbot.workflow.content.Addressable;

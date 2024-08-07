@@ -1,17 +1,20 @@
 package org.finos.springbot.teams.handlers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.microsoft.bot.connector.rest.ErrorResponseException;
-import com.microsoft.bot.schema.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.function.BiFunction;
+
 import org.apache.commons.lang3.StringUtils;
 import org.finos.springbot.teams.TeamsException;
 import org.finos.springbot.teams.content.TeamsAddressable;
 import org.finos.springbot.teams.conversations.TeamsErrorResourceResponse;
 import org.finos.springbot.teams.history.StorageIDResponseHandler;
 import org.finos.springbot.teams.history.TeamsHistory;
+import org.finos.springbot.teams.response.TeamsWorkResponse;
 import org.finos.springbot.teams.response.templating.EntityMarkupTemplateProvider;
 import org.finos.springbot.teams.response.templating.MarkupAndEntities;
 import org.finos.springbot.teams.state.TeamsStateStorage;
@@ -21,10 +24,12 @@ import org.finos.springbot.teams.templating.thymeleaf.ThymeleafTemplateProvider;
 import org.finos.springbot.workflow.actions.Action;
 import org.finos.springbot.workflow.actions.ErrorAction;
 import org.finos.springbot.workflow.annotations.WorkMode;
+import org.finos.springbot.workflow.response.AttachmentResponse;
 import org.finos.springbot.workflow.response.ErrorResponse;
-import org.finos.springbot.workflow.response.*;
+import org.finos.springbot.workflow.response.MessageResponse;
+import org.finos.springbot.workflow.response.Response;
+import org.finos.springbot.workflow.response.WorkResponse;
 import org.finos.springbot.workflow.response.handlers.ResponseHandler;
-import org.finos.springbot.workflow.response.templating.TeamsWorkResponse;
 import org.finos.springbot.workflow.tags.HeaderDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,10 +38,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.ErrorHandler;
 
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
-import java.util.function.BiFunction;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.microsoft.bot.connector.rest.ErrorResponseException;
+import com.microsoft.bot.schema.Activity;
+import com.microsoft.bot.schema.Attachment;
+import com.microsoft.bot.schema.Entity;
+import com.microsoft.bot.schema.ResourceResponse;
+import com.microsoft.bot.schema.TextFormatTypes;
 
 public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, ApplicationContextAware {
 	
@@ -103,9 +114,12 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
  					 
 					if (tt == TemplateType.ADAPTIVE_CARD) {
 						JsonNode cardJson = workTemplater.template(wr);
-						Optional<String> responseSummaryOptional = t instanceof TeamsWorkResponse ? Optional.ofNullable(((TeamsWorkResponse) t).getSummary()) : Optional.empty() ;
+						String responseSummary = null;
+						if( wr instanceof TeamsWorkResponse) {
+							responseSummary = ((TeamsWorkResponse) wr).getSummary() ;
+						}
 
-						return sendCardResponse(cardJson, ta, wr.getData(), responseSummaryOptional)
+						return sendCardResponse(cardJson, ta, wr.getData(), responseSummary)
 							.handle(handleErrorAndStorage(cardJson, ta, wr.getData(), t)).get();
 					} else {
 						MarkupAndEntities mae = displayTemplater.template(wr);
@@ -164,8 +178,13 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 						JsonNode buttonsJson = workTemplater.template(null);
 						wr.getData().put(AdaptiveCardTemplateProvider.FORMID_KEY, "just-buttons");
 						JsonNode expandedJson = workTemplater.applyTemplate(buttonsJson, wr);
-						Optional<String> responseSummaryOptional = wr instanceof TeamsWorkResponse ? Optional.ofNullable(((TeamsWorkResponse) wr).getSummary()) : Optional.empty() ;
-						return sendCardResponse(expandedJson, (TeamsAddressable) wr.getAddress(), wr.getData(), responseSummaryOptional).get();
+						
+						String responseSummary = null;
+						if( wr instanceof TeamsWorkResponse) {
+							responseSummary = ((TeamsWorkResponse) wr).getSummary() ;
+						}
+						
+						return sendCardResponse(expandedJson, (TeamsAddressable) wr.getAddress(), wr.getData(), responseSummary).get();
 					} else {						
 						return rr;
 					}
@@ -213,13 +232,14 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 			};
 	}
 	
-	protected CompletableFuture<ResourceResponse> sendCardResponse(JsonNode json, TeamsAddressable address, Map<String, Object> data, Optional<String> summaryOptional) throws Exception {
+	protected CompletableFuture<ResourceResponse> sendCardResponse(JsonNode json, TeamsAddressable address, Map<String, Object> data, String responseSummary) throws Exception {
 		Activity out = Activity.createMessageActivity();
 		Attachment body = new Attachment();
 		body.setContentType("application/vnd.microsoft.card.adaptive");
 		body.setContent(json);
-		if(summaryOptional.isPresent() && StringUtils.isNotBlank(summaryOptional.get()))
-			out.setSummary(summaryOptional.get());
+		if(StringUtils.isNotBlank(responseSummary)) {
+			out.setSummary(responseSummary);
+		}
 		out.getAttachments().add(body);
 		return ah.handleActivity(out, address);
 	}

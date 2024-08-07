@@ -8,13 +8,11 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.function.BiFunction;
 
-import org.apache.commons.lang3.StringUtils;
 import org.finos.springbot.teams.TeamsException;
 import org.finos.springbot.teams.content.TeamsAddressable;
 import org.finos.springbot.teams.conversations.TeamsErrorResourceResponse;
 import org.finos.springbot.teams.history.StorageIDResponseHandler;
 import org.finos.springbot.teams.history.TeamsHistory;
-import org.finos.springbot.teams.response.TeamsWorkResponse;
 import org.finos.springbot.teams.response.templating.EntityMarkupTemplateProvider;
 import org.finos.springbot.teams.response.templating.MarkupAndEntities;
 import org.finos.springbot.teams.state.TeamsStateStorage;
@@ -114,12 +112,7 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
  					 
 					if (tt == TemplateType.ADAPTIVE_CARD) {
 						JsonNode cardJson = workTemplater.template(wr);
-						String responseSummary = null;
-						if( wr instanceof TeamsWorkResponse) {
-							responseSummary = ((TeamsWorkResponse) wr).getSummary() ;
-						}
-
-						return sendCardResponse(cardJson, ta, wr.getData(), responseSummary)
+						return sendCardResponse(cardJson, ta, wr.getData())
 							.handle(handleErrorAndStorage(cardJson, ta, wr.getData(), t)).get();
 					} else {
 						MarkupAndEntities mae = displayTemplater.template(wr);
@@ -178,13 +171,7 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 						JsonNode buttonsJson = workTemplater.template(null);
 						wr.getData().put(AdaptiveCardTemplateProvider.FORMID_KEY, "just-buttons");
 						JsonNode expandedJson = workTemplater.applyTemplate(buttonsJson, wr);
-						
-						String responseSummary = null;
-						if( wr instanceof TeamsWorkResponse) {
-							responseSummary = ((TeamsWorkResponse) wr).getSummary() ;
-						}
-						
-						return sendCardResponse(expandedJson, (TeamsAddressable) wr.getAddress(), wr.getData(), responseSummary).get();
+						return sendCardResponse(expandedJson, (TeamsAddressable) wr.getAddress(), wr.getData()).get();
 					} else {						
 						return rr;
 					}
@@ -232,13 +219,13 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 			};
 	}
 	
-	protected CompletableFuture<ResourceResponse> sendCardResponse(JsonNode json, TeamsAddressable address, Map<String, Object> data, String responseSummary) throws Exception {
+	protected CompletableFuture<ResourceResponse> sendCardResponse(JsonNode json, TeamsAddressable address, Map<String, Object> data) throws Exception {
 		Activity out = Activity.createMessageActivity();
 		Attachment body = new Attachment();
 		body.setContentType("application/vnd.microsoft.card.adaptive");
 		body.setContent(json);
-		if(StringUtils.isNotBlank(responseSummary)) {
-			out.setSummary(responseSummary);
+		if(data.containsKey(WorkResponse.SUMMARY_KEY)) {
+			out.setSummary(data.get(WorkResponse.SUMMARY_KEY).toString());
 		}
 		out.getAttachments().add(body);
 		return ah.handleActivity(out, address);

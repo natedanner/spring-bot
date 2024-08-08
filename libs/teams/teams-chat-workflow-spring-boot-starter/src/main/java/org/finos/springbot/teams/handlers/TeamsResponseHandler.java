@@ -219,11 +219,14 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 			};
 	}
 	
-	protected CompletableFuture<ResourceResponse> sendCardResponse(JsonNode json, TeamsAddressable address, Map<String, Object> data) throws Exception {		
+	protected CompletableFuture<ResourceResponse> sendCardResponse(JsonNode json, TeamsAddressable address, Map<String, Object> data) throws Exception {
 		Activity out = Activity.createMessageActivity();
 		Attachment body = new Attachment();
 		body.setContentType("application/vnd.microsoft.card.adaptive");
 		body.setContent(json);
+		if(data.containsKey(WorkResponse.SUMMARY_KEY)) {
+			out.setSummary(data.get(WorkResponse.SUMMARY_KEY).toString());
+		}
 		out.getAttachments().add(body);
 		return ah.handleActivity(out, address);
 	}

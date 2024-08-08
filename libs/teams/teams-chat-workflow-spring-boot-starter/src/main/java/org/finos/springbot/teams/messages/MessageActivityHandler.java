@@ -61,7 +61,7 @@ public class MessageActivityHandler extends TeamsActivityHandler {
 	@Override
 	protected CompletableFuture<Void> onMessageActivity(TurnContext turnContext) {
 		return CompletableFuture.completedFuture(null)
-			.thenRun(() -> handleActivity(turnContext));
+				.thenRun(() -> CompletableFuture.runAsync(() -> handleActivity(turnContext)));
 	}
 
 	protected void handleActivity(TurnContext turnContext) {

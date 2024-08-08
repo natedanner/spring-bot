@@ -24,6 +24,7 @@ public class WorkResponse extends DataResponse {
 	public static final String DEFAULT_FORM_TEMPLATE_VIEW = "default-view";
 	public static final String ERRORS_KEY = "errors";
 	public static final String OBJECT_KEY = "form";
+	public static final String SUMMARY_KEY = "summary-key";
 	
 	private final WorkMode mode;
 	private final Class<?> formClass;
@@ -45,12 +46,26 @@ public class WorkResponse extends DataResponse {
 		this(to, o, m, null, null);
 	}
 	
+	/**
+	 * Call this contructor to create a work response with summary
+	 */
+	public WorkResponse(Addressable to, Object o, WorkMode m, String summary) {
+		this(to, createEntityMapWithSummay(o, null, null, summary), getTemplateNameForObject(m, o), m, o.getClass());
+	}
+	
 	public static Map<String, Object> createEntityMap(Object o, ButtonList buttons, ErrorMap errors) {
 		Map<String, Object> json = new HashMap<>();
 		json.put(ButtonList.KEY, buttons == null ? new ButtonList() : buttons);
 		json.put(ERRORS_KEY, errors == null ? new ErrorMap() : errors);
 		json.put(OBJECT_KEY, o);
 		return json;
+	}
+	
+	public static Map<String, Object> createEntityMapWithSummay(Object o, ButtonList buttons, ErrorMap errors, String summary) {
+		 Map<String, Object> map = createEntityMap(o, buttons, errors);
+		 map.put(SUMMARY_KEY, summary);
+		 
+		 return map;
 	}
 
 	public static String getTemplateNameForObject(WorkMode m, Object o) {

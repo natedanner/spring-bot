@@ -224,7 +224,7 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 		Attachment body = new Attachment();
 		body.setContentType("application/vnd.microsoft.card.adaptive");
 		body.setContent(json);
-		if(data.containsKey(WorkResponse.SUMMARY_KEY)) {
+		if(data.containsKey(WorkResponse.SUMMARY_KEY) && Objects.nonNull(data.get(WorkResponse.SUMMARY_KEY))) {
 			out.setSummary(data.get(WorkResponse.SUMMARY_KEY).toString());
 		}
 		out.getAttachments().add(body);

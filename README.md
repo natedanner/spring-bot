@@ -22,6 +22,7 @@ Spring Bot is a set of [Spring Boot](https://spring.io/projects/spring-boot) sta
 - Spring Bot provides a simple annotation-based way to create chat bots.
 - It currently supports Symphony and Microsoft Teams.
 - It allows you to build your chatbot using annotations, binding messages to methods in a similar way to [Spring Web MVC](https://docs.spring.io/spring-framework/docs/6.0.x/reference/html/web.html#spring-web)
+- [READ THE FINOS CASE STUDY HERE](https://www.finos.org/deutsche-bank-spring-bot-case-study)
 
 ## Why Is This Important?
 

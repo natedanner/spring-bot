@@ -159,7 +159,7 @@ public class TeamsHandlerMappingTest extends AbstractHandlerMappingTest {
 		
 		mockSetup();
 		mockTurnContext(s, null, false);
-		mah.onTurn(tc);
+		mah.handleActivity(tc);
 	}
 	
 	private void mockSetup() {
@@ -309,7 +309,7 @@ public class TeamsHandlerMappingTest extends AbstractHandlerMappingTest {
 	protected void pressButton(String s, Map<String, Object> formData) {
 		mockSetup();
 		mockTurnContext(s, formData, false);
-		mah.onTurn(tc);
+		mah.handleActivity(tc);
 	}
 
 

@@ -69,6 +69,12 @@
 		<cve>CVE-2022-0198</cve>
 		<cve>CVE-2017-10355</cve>
 		<cve>CVE-2020-10146</cve>
+		<cve>CVE-2024-38820</cve>		
+		<cve>CVE-2024-38809</cve>
+		<cve>CVE-2024-38816</cve>
+		<cve>CVE-2023-7272</cve>
+		<cve>CVE-2024-45772</cve>
+		<cve>CVE-2024-7254</cve>
 	</suppress>
 
 

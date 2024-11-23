@@ -98,7 +98,7 @@ public class AzureBlobStateStorageTest extends AbstractStateStorageTest {
 				Mockito.any(),
 				Mockito.eq(Duration.ofSeconds(5)), 
 				Mockito.eq(Context.NONE)))
-			.thenAnswer((a) -> {	
+			.thenAnswer(a -> {	
 				FindBlobsOptions fbo = a.getArgument(0);
 				List<String> res = results.get(fbo.getQuery());
 				if (res != null) {
@@ -116,26 +116,26 @@ public class AzureBlobStateStorageTest extends AbstractStateStorageTest {
 	}
 
 	private void allowReadingFromTheFile() throws IOException {
-		Mockito.when(theFileBlobClient.openInputStream()).thenAnswer((a) -> setupBlobInputStream());
+		Mockito.when(theFileBlobClient.openInputStream()).thenAnswer(a -> setupBlobInputStream());
 	}
 	
 	private void allowReadingFromTheOtherFile() throws IOException {
-		Mockito.when(theOtherFileBlobClient.openInputStream()).thenAnswer((a) -> setupBlobInputStream());
+		Mockito.when(theOtherFileBlobClient.openInputStream()).thenAnswer(a -> setupBlobInputStream());
 	}
 	
 	private void allowReadingFromTheFileA() throws IOException {
-		Mockito.when(theFileABlobClient.openInputStream()).thenAnswer((a) -> setupBlobInputStream());
+		Mockito.when(theFileABlobClient.openInputStream()).thenAnswer(a -> setupBlobInputStream());
 	}
 	
 	private void allowReadingFromTheFileB() throws IOException {
-		Mockito.when(theFileBBlobClient.openInputStream()).thenAnswer((a) -> setupBlobInputStream());
+		Mockito.when(theFileBBlobClient.openInputStream()).thenAnswer(a -> setupBlobInputStream());
 	}
 	
 
 	private BlobInputStream setupBlobInputStream() throws IOException {
 		BlobInputStream bis = Mockito.mock(BlobInputStream.class);
-		boolean isRead[] = { false };
-		Mockito.when(bis.read(Mockito.any(), Mockito.anyInt(), Mockito.anyInt())).thenAnswer((a2) -> {
+		boolean[] isRead = { false };
+		Mockito.when(bis.read(Mockito.any(), Mockito.anyInt(), Mockito.anyInt())).thenAnswer(a2 -> {
 			if (isRead[0]) {
 				return -1;
 			} else {

@@ -24,7 +24,7 @@ public class ThymeleafRendering implements TableRendering<String> {
 
 	@Override
 	public String addFieldName(String field, String value) {
-		return !StringUtils.hasText(field) ? "" : "<tr><td style=\"width: 200px\"><b>" + field + ":</b></td><td>" + value + "</td></tr>";
+		return StringUtils.hasText(field) ? "<tr><td style=\"width: 200px\"><b>" + field + ":</b></td><td>" + value + "</td></tr>" : "";
 	}
 
 	@Override
@@ -135,7 +135,7 @@ public class ThymeleafRendering implements TableRendering<String> {
 		String indexName = subVar.getDataPath();
 		String choiceLocation = variable.getDataPath();
 		sb.append(indent(subVar));
-		sb.append("<tr th:each=\""+indexName+" : ${"+choiceLocation+"}\">");
+		sb.append("<tr th:each=\"").append(indexName).append(" : ${").append(choiceLocation).append("}\">");
 		sb.append(cells.stream().reduce((a, b) -> a + "\n" + b).orElse(""));
 		sb.append(indent(subVar) + "</tr>");
 		return sb.toString();

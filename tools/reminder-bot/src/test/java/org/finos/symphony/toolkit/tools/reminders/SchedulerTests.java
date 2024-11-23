@@ -89,7 +89,6 @@ public class SchedulerTests {
 		rl.setTimeZone(ZoneId.of("Europe/London"));
 
 		rl.setReminders(reminders);
-		Optional<ReminderList> rrl = Optional.of(rl);
-		return rrl;
+		return Optional.of(rl);
 	}
 }

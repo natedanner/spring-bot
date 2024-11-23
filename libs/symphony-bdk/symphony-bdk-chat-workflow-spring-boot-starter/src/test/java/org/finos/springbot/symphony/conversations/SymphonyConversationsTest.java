@@ -59,7 +59,7 @@ public class SymphonyConversationsTest {
 		
 //		// create room
 		
-		List<Long> l = new ArrayList<Long>();
+		List<Long> l = new ArrayList<>();
 		l.add(AbstractHandlerMappingTest.ROB_EXAMPLE_ID);	// robski
 		l.add(AbstractHandlerMappingTest.BOT_ID); // the bot
 		

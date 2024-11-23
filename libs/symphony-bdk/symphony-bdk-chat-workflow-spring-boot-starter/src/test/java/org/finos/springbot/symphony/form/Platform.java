@@ -64,12 +64,15 @@ public class Platform {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Platform other = (Platform) obj;
 		return Objects.equals(cashTag, other.cashTag) && Objects.equals(chat, other.chat)
 				&& Objects.equals(hashTag, other.hashTag) && Objects.equals(someUser, other.someUser);

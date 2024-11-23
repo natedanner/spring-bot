@@ -107,7 +107,7 @@ public class TeamsHTMLParserTest {
 
 	protected List<Entity> parseEntities(String[] someEntities) {
 		ObjectMapper om = new ObjectMapper();
-		List<Entity> entities = Arrays.stream(someEntities)
+		return Arrays.stream(someEntities)
 			.map(s -> {
 				try {
 					return om.readValue(s, Entity.class);
@@ -116,7 +116,6 @@ public class TeamsHTMLParserTest {
 				}
 			})
 			.collect(Collectors.toList());
-		return entities;
 	}
 	
 	@Test

@@ -58,11 +58,11 @@ public class HistoryTest {
 		val.put("someChannel", a);
 		val.put(StorageIDResponseHandler.STORAGE_ID_KEY, ""+new Random().nextFloat());
 		
-		Set<String> tags = new HashSet<String>();
+		Set<String> tags = new HashSet<>();
 		tags.addAll(TagSupport.classTags(a));
 		tags.addAll(TagSupport.classTags(in));
 		HeaderDetails hd = new HeaderDetails();
-		hd.setTags(new ArrayList<String>(tags));
+		hd.setTags(new ArrayList<>(tags));
 		val.put(HeaderDetails.KEY, hd);
 		
 		TeamsResponseHandler.performStorage(a, val, teamsState);

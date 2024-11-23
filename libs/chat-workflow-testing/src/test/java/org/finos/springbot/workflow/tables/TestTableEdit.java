@@ -61,8 +61,8 @@ public class TestTableEdit {
 	@MockBean
 	ResponseHandlers rh;
 	
-	Chat room = null;
-	User u = null;
+	Chat room;
+	User u;
 
 	public static TestObjects createTestObjects() {
 		return new TestObjects(

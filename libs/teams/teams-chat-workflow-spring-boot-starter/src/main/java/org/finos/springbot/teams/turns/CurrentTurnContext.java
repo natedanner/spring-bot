@@ -4,6 +4,6 @@ import com.microsoft.bot.builder.TurnContext;
 
 public class CurrentTurnContext {
 	
-	public static final ThreadLocal<TurnContext> CURRENT_CONTEXT = new ThreadLocal<TurnContext>();
+	public static final ThreadLocal<TurnContext> CURRENT_CONTEXT = new ThreadLocal<>();
 
 }

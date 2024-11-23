@@ -35,7 +35,7 @@ public class InMemoryRetryingActivityHandlerTest {
 	@MockBean
 	TeamsConversations conv;
 
-	int go = 0;
+	int go;
 	int passEvery = 3;
 	
 	Set<Thread> allUsedThreads = new HashSet<>();

@@ -22,7 +22,7 @@ public class SymphonyRoom extends Taxonomy implements Chat, SymphonyAddressable 
 	}
 	
 	private static List<TaxonomyElement> createTaxonomy(String name, String streamId) {
-		List<TaxonomyElement> out = new ArrayList<TaxonomyElement>();
+		List<TaxonomyElement> out = new ArrayList<>();
 		if (streamId != null) {
 			out.add(new StreamID(streamId));
 		} else {

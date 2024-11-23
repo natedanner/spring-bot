@@ -34,7 +34,7 @@ public class FormConverter {
 	public Object convert(Map<String, Object> formValues, String type) throws ClassNotFoundException {
 		Object out = new HashMap<>();
 		for (String key : formValues.keySet()) {
-			if (!key.equals("action")) {
+			if (!"action".equals(key)) {
 				Object object = formValues.get(key);
 				if (key.endsWith(".")) {
 					key = key.substring(0,key.length()-1);
@@ -84,8 +84,7 @@ public class FormConverter {
 
 	private Integer safeParseInt(String part) {
 		try {
-			Integer i = Integer.parseInt(part);
-			return i;
+			return Integer.parseInt(part);
 		} catch (NumberFormatException e) {
 			return null;
 

@@ -45,12 +45,12 @@ import com.microsoft.bot.schema.Transcript;
 //Note: this class instanceof marked as abstract to prevent the ASP runtime from registering it as a controller.
 public abstract class ChannelServiceController {
 
- /**
-  * The slf4j Logger to use. Note that slf4j is configured by providing Log4j
-  * dependencies in the POM, and corresponding Log4j configuration in the
-  * 'resources' folder.
-  */
- private Logger logger = LoggerFactory.getLogger(BotController.class);
+	/**
+ * The slf4j Logger to use. Note that slf4j is configured by providing Log4j
+ * dependencies in the POM, and corresponding Log4j configuration in the
+ * 'resources' folder.
+	*/
+	private final Logger logger = LoggerFactory.getLogger(BotController.class);
 
  private final ChannelServiceHandler handler;
 

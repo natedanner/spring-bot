@@ -48,8 +48,8 @@ public class FileActivityHandler extends MessageActivityHandler {
 		LOG.info("onTeamsFileConsentAccept called...");	
 		
 		return upload(fileConsentCardResponse)
-				.thenCompose(result -> !result.result() ? fileUploadFailed(turnContext, result.value())
-						: fileUploadCompleted(turnContext, fileConsentCardResponse));
+				.thenCompose(result -> result.result() ? fileUploadCompleted(turnContext, fileConsentCardResponse)
+						: fileUploadFailed(turnContext, result.value()));
 	}
 
 	@Override
@@ -89,9 +89,9 @@ public class FileActivityHandler extends MessageActivityHandler {
 					try (FileInputStream fileStream = new FileInputStream(filePath);
 							OutputStream uploadStream = connection.getOutputStream()) {
 						byte[] buffer = new byte[4096];
-						int bytes_read;
-						while ((bytes_read = fileStream.read(buffer)) != -1) {
-							uploadStream.write(buffer, 0, bytes_read);
+						int bytesRead;
+						while ((bytesRead = fileStream.read(buffer)) != -1) {
+							uploadStream.write(buffer, 0, bytesRead);
 						}
 
 						uploadStream.flush();
@@ -100,8 +100,9 @@ public class FileActivityHandler extends MessageActivityHandler {
 					try {
 						BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 						String inputLine;
-						while ((inputLine = in.readLine()) != null)
+						while ((inputLine = in.readLine()) != null) {
 							LOG.info(inputLine);
+						}
 						in.close();
 					} catch (Exception e) {
 						LOG.error("Exception occured while reading steam.. ignore this error " + e);

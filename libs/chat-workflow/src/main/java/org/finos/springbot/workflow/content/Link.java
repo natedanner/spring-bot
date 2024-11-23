@@ -10,7 +10,7 @@ public interface Link extends OrderedContent<Content> {
 	public static <X extends Content> Link of(String href, String text) {
 		return of(href,
 				Arrays.stream(text.split("\\s"))
-					.map(s -> Word.of(s))
+					.map(Word::of)
 					.toArray(Word[]::new));
 	}
 	

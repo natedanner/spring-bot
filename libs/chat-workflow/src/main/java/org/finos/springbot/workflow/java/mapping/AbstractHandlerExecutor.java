@@ -17,9 +17,9 @@ import org.springframework.core.MethodParameter;
  *
  */
 public abstract class AbstractHandlerExecutor implements ChatHandlerExecutor {
-	
-	private WorkflowResolversFactory wrf;
-	private ResponseConverters converters;
+
+	private final WorkflowResolversFactory wrf;
+	private final ResponseConverters converters;
 	
 	public AbstractHandlerExecutor(WorkflowResolversFactory wrf, ResponseConverters converters) {
 		super();

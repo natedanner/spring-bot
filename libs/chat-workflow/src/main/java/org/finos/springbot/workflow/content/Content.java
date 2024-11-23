@@ -64,11 +64,7 @@ public interface Content {
 	 * Checks whether this content starts with item. 
 	 */
 	public default boolean startsWith(Content item) {
-		if ((this.matches(item)) || ((item != null) && (item.matches(this)))) {
-			return true;
-		} else {
-			return false;
-		}
+		return (this.matches(item)) || ((item != null) && (item.matches(this)));
 	}
 	
 	/**

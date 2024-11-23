@@ -41,7 +41,7 @@ public class HeaderTagResponseHandler implements ResponseHandler<Void> {
 			}
 			
 			
-			hd.setTags(new ArrayList<String>(tags));
+			hd.setTags(new ArrayList<>(tags));
 
 		}
 		

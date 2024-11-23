@@ -23,8 +23,8 @@ import org.springframework.core.annotation.AnnotatedElementUtils;
 
 public class ChatButtonChatHandlerMapping extends AbstractSpringComponentHandlerMapping<ChatButton> {
 
-	private WorkflowResolversFactory wrf;
-	private ResponseConverters converters;
+	private final WorkflowResolversFactory wrf;
+	private final ResponseConverters converters;
 	
 	public ChatButtonChatHandlerMapping(WorkflowResolversFactory wrf, ResponseConverters converters, AllConversations conversations) {
 		super(conversations);
@@ -43,11 +43,9 @@ public class ChatButtonChatHandlerMapping extends AbstractSpringComponentHandler
 
 	@Override
 	public List<ChatMapping<ChatButton>> getHandlers(Action a) {
-		List<ChatMapping<ChatButton>> out = getAllHandlers(a.getAddressable(), a.getUser()).stream()
+		return getAllHandlers(a.getAddressable(), a.getUser()).stream()
 				.filter(m -> m.getExecutor(a) != null)
 				.collect(Collectors.toList());
-
-		return out;
 	}
 	
 	@Override
@@ -63,12 +61,10 @@ public class ChatButtonChatHandlerMapping extends AbstractSpringComponentHandler
 
 	@Override
 	public List<ChatHandlerExecutor> getExecutors(Action a) {
-		List<ChatHandlerExecutor> out = getAllHandlers(a.getAddressable(), a.getUser()).stream()
+		return getAllHandlers(a.getAddressable(), a.getUser()).stream()
 				.map(m -> m.getExecutor(a))
-				.filter(f -> f != null)
+				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
-
-		return out;
 	}
 	
 	private boolean canBePerformed(Addressable a, User u, ChatButton cb) {
@@ -78,7 +74,7 @@ public class ChatButtonChatHandlerMapping extends AbstractSpringComponentHandler
 	@Override
 	protected MappingRegistration<ChatButton> createMappingRegistration(ChatButton mapping, ChatHandlerMethod handlerMethod) {
 			
-		return new MappingRegistration<ChatButton>(mapping, handlerMethod) {
+		return new MappingRegistration<>(mapping, handlerMethod) {
 			
 			@Override
 			public ChatHandlerExecutor getExecutor(Action a) {

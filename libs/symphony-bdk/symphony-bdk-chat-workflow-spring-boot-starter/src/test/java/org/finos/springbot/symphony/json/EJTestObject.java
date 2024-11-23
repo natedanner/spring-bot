@@ -44,36 +44,45 @@ public class EJTestObject {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((r == null) ? 0 : r.hashCode());
-		result = prime * result + ((someText == null) ? 0 : someText.hashCode());
-		result = prime * result + ((u == null) ? 0 : u.hashCode());
+		result = prime * result + (r == null ? 0 : r.hashCode());
+		result = prime * result + (someText == null ? 0 : someText.hashCode());
+		result = prime * result + (u == null ? 0 : u.hashCode());
 		return result;
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		EJTestObject other = (EJTestObject) obj;
 		if (r == null) {
-			if (other.r != null)
+			if (other.r != null) {
 				return false;
-		} else if (!r.equals(other.r))
+			}
+		} else if (!r.equals(other.r)) {
 			return false;
+		}
 		if (someText == null) {
-			if (other.someText != null)
+			if (other.someText != null) {
 				return false;
-		} else if (!someText.equals(other.someText))
+			}
+		} else if (!someText.equals(other.someText)) {
 			return false;
+		}
 		if (u == null) {
-			if (other.u != null)
+			if (other.u != null) {
 				return false;
-		} else if (!u.equals(other.u))
+			}
+		} else if (!u.equals(other.u)) {
 			return false;
+		}
 		return true;
 	}
 	

@@ -31,11 +31,11 @@ public final class HashTag extends Hashtag implements Tag {
 		}
 	}
 
-	public static final HashTag createID() {
+	public static HashTag createID() {
 		return createID(UUID.randomUUID());
 	}
 	
-	public static final HashTag createID(UUID id) {
+	public static HashTag createID(UUID id) {
 		return new HashTag(id.toString());
 	}
 }

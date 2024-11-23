@@ -15,7 +15,7 @@ import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 
 public class MeterRegistryConfigTest {
 
-	private MeterRegistryConfig meterRegistryConfig = new MeterRegistryConfig();
+	private final MeterRegistryConfig meterRegistryConfig = new MeterRegistryConfig();
 	private final MeterRegistry meterRegistry = new SimpleMeterRegistry();
 	private final CountedService countedService = getAdvisedService(new CountedService());
 

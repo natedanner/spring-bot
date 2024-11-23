@@ -44,15 +44,13 @@ public class SymphonyTemplateProvider extends AbstractResourceTemplateProvider<S
 		
 		String defaultTemplate = getTemplateForName(getDefaultTemplateName());
 		
-		String out = defaultTemplate.replace("<!-- Message Content -->", insert);
-		
-		return out;
+		return defaultTemplate.replace("<!-- Message Content -->", insert);
 	}
 	
 	protected boolean needsButtons(Response r) {
 		if (r instanceof WorkResponse) {
 			ButtonList bl = (ButtonList) ((WorkResponse) r).getData().get(ButtonList.KEY);
-			return (bl != null) && (bl.getContents().size() > 0);
+			return (bl != null) && (!bl.getContents().isEmpty());
 		} else {
 			return false;
 		}

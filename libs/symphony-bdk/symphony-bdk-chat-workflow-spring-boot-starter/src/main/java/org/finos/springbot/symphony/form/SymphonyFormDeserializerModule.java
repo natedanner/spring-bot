@@ -44,8 +44,8 @@ public class SymphonyFormDeserializerModule extends Module {
 	public Version version() {
 		return VERSION;
 	}
-	
-	private AllConversations ac;
+
+	private final AllConversations ac;
 		
 	public SymphonyFormDeserializerModule(AllConversations ac) {
 		this.ac = ac;

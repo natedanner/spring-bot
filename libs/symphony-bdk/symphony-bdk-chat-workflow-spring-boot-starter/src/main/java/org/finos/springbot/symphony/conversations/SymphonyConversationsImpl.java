@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public class SymphonyConversationsImpl implements SymphonyConversations, Initial
 	
 	private static final Logger LOG = LoggerFactory.getLogger(SymphonyConversationsImpl.class);
 
-	private List<User> defaultAdministrators = new ArrayList<User>();
+	private List<User> defaultAdministrators = new ArrayList<>();
 	private long botUserId;
 	private final UserService userService;
 	private final StreamService streamsApi;
@@ -259,10 +260,10 @@ public class SymphonyConversationsImpl implements SymphonyConversations, Initial
 			
 			// next, we need to make sure that all of the admins are members of the room and owners.
 			List<Long> adminIds = getDefaultAdministrators().stream()
-				.filter(u -> u instanceof SymphonyUser)
-				.map(u -> (SymphonyUser) u)
+				.filter(SymphonyUser.class::isInstance)
+				.map(SymphonyUser.class::cast)
 				.map(su -> Long.parseLong(su.getUserId()))
-				.filter(id -> id != null)
+				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
 			
 			for (Long user : adminIds) {
@@ -278,8 +279,8 @@ public class SymphonyConversationsImpl implements SymphonyConversations, Initial
 		String streamId = theRoom.getKey();
 			
 		users.stream()
-			.filter(u -> u instanceof SymphonyUser)
-			.map(u -> (SymphonyUser) u)
+			.filter(SymphonyUser.class::isInstance)
+			.map(SymphonyUser.class::cast)
 			.forEach(u -> streamsApi.addMemberToRoom(Long.parseLong(u.getUserId()), streamId));
 		
 		return theRoom;
@@ -293,7 +294,7 @@ public class SymphonyConversationsImpl implements SymphonyConversations, Initial
 
 	@Override
 	public List<SymphonyUser> getChatAdmins(SymphonyRoom r) {
-		return getUsersInternal(r, f -> f.getOwner());
+		return getUsersInternal(r, MemberInfo::getOwner);
 	}
 
 
@@ -302,7 +303,7 @@ public class SymphonyConversationsImpl implements SymphonyConversations, Initial
 			List<MemberInfo> ml = streamsApi.listRoomMembers(r.getKey());
 			List<Long> ids = ml.stream()
 					.filter(filter)
-					.map(e -> e.getId()).collect(Collectors.toList());
+					.map(MemberInfo::getId).collect(Collectors.toList());
 			
 			List<UserV2> users = userService.listUsersByIds(ids, localPodLookup, true);
 

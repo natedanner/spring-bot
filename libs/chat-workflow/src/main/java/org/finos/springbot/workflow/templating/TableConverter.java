@@ -32,7 +32,9 @@ public class TableConverter<X> extends AbstractTableConverter<X> {
 	 
 	@Override
 	public X apply(Field ctx, WithType<X> controller, Type t, boolean editMode, Variable variable, WithField<X> showDetail) {
-		if (null == showDetail) return getR().description("...");
+		if (null == showDetail) {
+			return getR().description("...");
+		}
 		if (showDetail.expand()) {
 			return createTable(t, editMode, variable, tableColumnNames(), tableColumnValues(), controller);
 		} else {
@@ -50,7 +52,7 @@ public class TableConverter<X> extends AbstractTableConverter<X> {
 		Variable subVar = variable.index();
 
 		
-		List<X> out = new ArrayList<X>();
+		List<X> out = new ArrayList<>();
 
 		if (elementTypeConverter instanceof SimpleTypeConverter) {
 			X cellContent = ((SimpleTypeConverter<X>)elementTypeConverter).apply(null, controller, elementClass, false, subVar, cellDetail);
@@ -71,9 +73,7 @@ public class TableConverter<X> extends AbstractTableConverter<X> {
 		}
 		
 		
-		X row = getR().tableRow(variable, subVar, out);
-		
-		return row;
+		return getR().tableRow(variable, subVar, out);
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class TableConverter<X> extends AbstractTableConverter<X> {
 		Class<?> elementClass = (Class<?>) ((ParameterizedType) t).getActualTypeArguments()[0];
 		TypeConverter<X> elementTypeConverter = controller.getConverter(null, elementClass, controller);
 		
-		List<X> out = new ArrayList<X>();
+		List<X> out = new ArrayList<>();
  
 		if (elementTypeConverter instanceof SimpleTypeConverter) {
 			out.add(getR().tableCell(Collections.emptyMap(), getR().description("Value")));
@@ -111,7 +111,7 @@ public class TableConverter<X> extends AbstractTableConverter<X> {
     }
 
     protected WithField<X> tableColumnValues() {
-        return new WithField<X>() {
+        return new WithField<>() {
 
             @Override
             public boolean expand() {
@@ -132,7 +132,7 @@ public class TableConverter<X> extends AbstractTableConverter<X> {
 
 
     protected WithField<X> tableColumnNames() {
-        return new WithField<X>() {
+        return new WithField<>() {
 
             @Override
             public boolean expand() {

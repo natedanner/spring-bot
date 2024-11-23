@@ -16,8 +16,8 @@ public class MemoryStateStorage extends AbstractStateStorage {
 	
 	Map<String, String> store = new HashMap<>();
 	Map<String, List<Pair<String, String>>> tagIndex = new HashMap<>();
-	
-	private EntityJsonConverter ejc;
+
+	private final EntityJsonConverter ejc;
 
 	public MemoryStateStorage(EntityJsonConverter ejc) {
 		super();
@@ -46,7 +46,7 @@ public class MemoryStateStorage extends AbstractStateStorage {
 			.map(e -> ejc.readValue(store.get(e.getKey())))
 			.collect(Collectors.toList());
 			
-		if ((singleResultOnly) && (out.size() > 0)) {
+		if (singleResultOnly && (!out.isEmpty())) {
 			out = out.subList(0, 1);
 		}
 		
@@ -80,12 +80,7 @@ public class MemoryStateStorage extends AbstractStateStorage {
 		if (filter.operator.contains(">") && (cmp < 0)) {
 			return true;
 		}
-		
-		if (filter.operator.contains("<") && (cmp > 0)) {
-			return true;
-		}
-		
-		return false;
+		return filter.operator.contains("<") && (cmp > 0);
 	}
 
 	private Pair<String, String> getMatchedPair(List<Pair<String, String>> value, String key) {

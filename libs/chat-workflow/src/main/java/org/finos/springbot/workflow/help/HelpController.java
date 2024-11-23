@@ -38,10 +38,8 @@ public class HelpController implements ApplicationContextAware {
 	
 	protected String defaultDescription(Method m) {
 		return Arrays.stream(Optional.ofNullable(m.getName()).orElse("").split(DEFAULT_FORMATTER_PATTERN))
-			.map(word -> {
-				return null != word && !word.trim().isEmpty() ? Character.toUpperCase(word.charAt(0)) + word.substring(1)
-					: "";
-			})
+			.map(word -> null != word && !word.trim().isEmpty() ? Character.toUpperCase(word.charAt(0)) + word.substring(1)
+					: "")
 			.collect(Collectors.joining(" "));
 	}
 
@@ -62,12 +60,8 @@ public class HelpController implements ApplicationContextAware {
 
 	private boolean includeInHelp(ChatMapping<ChatRequest> hm) {
 		ChatRequest e = hm.getMapping();
-		
-		if (!e.addToHelp()) {
-			return false;
-		}
-		
-		return true;
+
+		return !!e.addToHelp();
 	}
 
 	private CommandDescription convertToCommandDescriptions(ChatMapping<ChatRequest> hm) {

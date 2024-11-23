@@ -94,7 +94,7 @@ public class MessageMLParser extends AbstractContentParser<String, EntityJson>{
 	}
 
 	public Message apply(String message, EntityJson jsonObjects) {
-		message = (!message.contains("<messageML>")) ? "<messageML>" + message + "</messageML>" : message;
+		message = !message.contains("<messageML>") ? "<messageML>" + message + "</messageML>" : message;
 		
 
 		Content [] out = { null };

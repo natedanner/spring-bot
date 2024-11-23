@@ -78,7 +78,7 @@ public class ResolverConfig {
 	@Bean
 	@ConditionalOnMissingBean
 	public MessagePartWorkflowResolverFactory messagePartWorkflowResolverFactory() {
-		List<Class<? extends Content>> allowedTypes = new ArrayList<Class<? extends Content>>();
+		List<Class<? extends Content>> allowedTypes = new ArrayList<>();
 		allowedTypes.add(BlockQuote.class);
 		allowedTypes.add(Message.class);
 		allowedTypes.add(OrderedList.class);

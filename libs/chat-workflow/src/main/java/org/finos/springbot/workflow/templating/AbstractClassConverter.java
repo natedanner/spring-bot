@@ -6,7 +6,7 @@ import java.lang.reflect.Type;
 
 public abstract class AbstractClassConverter<X> extends AbstractSimpleTypeConverter<X> {
 
-	private Class<?>[] forClass;
+	private final Class<?>[] forClass;
 
 	public AbstractClassConverter(int priority, Rendering<X> r, Class<?>... forClass) {
 		super(priority, r);

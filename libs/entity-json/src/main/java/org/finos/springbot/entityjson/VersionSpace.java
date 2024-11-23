@@ -86,12 +86,15 @@ public class VersionSpace {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		VersionSpace other = (VersionSpace) obj;
 		return Arrays.equals(readVersions, other.readVersions) && Objects.equals(toUse, other.toUse)
 				&& Objects.equals(typeName, other.typeName) && Objects.equals(writeVersion, other.writeVersion);

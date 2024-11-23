@@ -6,8 +6,8 @@ import javax.net.ssl.TrustManager;
 public abstract class AbstractApiBuilder implements ConfigurableApiBuilder {
 
 	public String url;
-	protected KeyManager[] keyManagers = null;
-	protected TrustManager[] trustManagers = null;
+	protected KeyManager[] keyManagers;
+	protected TrustManager[] trustManagers;
 	
 	public AbstractApiBuilder() {
 	}
@@ -25,7 +25,7 @@ public abstract class AbstractApiBuilder implements ConfigurableApiBuilder {
 	protected String user;
 	protected String password;
 	protected int port;
-	protected Long connectTimeout = null;
+	protected Long connectTimeout;
 	
 	@Override
 	public void setProxyDetails(String proxyHost, String user, String password, int port) {

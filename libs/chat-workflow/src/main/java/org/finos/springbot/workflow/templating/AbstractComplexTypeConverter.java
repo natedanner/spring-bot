@@ -21,16 +21,14 @@ public abstract class AbstractComplexTypeConverter<X> extends AbstractTypeConver
 	public List<X> withFields(WithType<X> controller, Class<?> c, boolean editMode, Variable variable, WithField<X> displayer) {
 		List<Field> fields = getFields(c);
 		
-		List<X> out = fields.stream()
+		return fields.stream()
 			.map(f -> displayer.apply(f, editMode, variable.field(f.getName()), controller))
 			.collect(Collectors.toList());
-			
-		return out;
 	}
 
 	@Override
 	public List<Field> getFields(Class<?> c) {
-		List<Field> out = new ArrayList<Field>();
+		List<Field> out = new ArrayList<>();
 		
 		if ((c != Object.class) && (c!=null)) {
 			

@@ -9,9 +9,9 @@ import org.finos.springbot.tool.rssbot.feed.FeedList;
 import org.finos.springbot.workflow.content.Addressable;
 
 public class FeedListCacheImpl implements FeedListCache {
-	
-	private Map<Addressable, FeedList> contents = new HashMap<>();
-	private Map<FeedList, Instant> times = new HashMap<>();
+
+	private final Map<Addressable, FeedList> contents = new HashMap<>();
+	private final Map<FeedList, Instant> times = new HashMap<>();
 
 	@Override
 	public Instant nextReportTime(FeedList fl) {

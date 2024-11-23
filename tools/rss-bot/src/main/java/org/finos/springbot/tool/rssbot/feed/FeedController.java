@@ -55,8 +55,7 @@ public class FeedController {
 	@ChatRequest(value="subscriptions", description = "Show RSS Feeds Published In This Room")
 	public FeedList getFeedList(SymphonyAddressable a) {
 		Optional<FeedList> fl = hist.getLastFromHistory(FeedList.class, a);
-		FeedList ob = fl.orElse(new FeedList());
-		return ob;
+		return fl.orElse(new FeedList());
 	}
 
 	@ChatRequest(description = "Subscribe to a feed. ", value="subscribe")

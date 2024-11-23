@@ -14,7 +14,7 @@ public class ChatHandlerMappingActionConsumer extends AbstractAddressedActionCon
 
 	private static final Logger LOG = LoggerFactory.getLogger(ChatHandlerMappingActionConsumer.class);
 
-	private List<ChatHandlerMapping<?>> handlerMapping;
+	private final List<ChatHandlerMapping<?>> handlerMapping;
 
 	public ChatHandlerMappingActionConsumer(List<ChatHandlerMapping<?>> handlerMapping, ErrorHandler eh, List<AddressingChecker> ac) {
 		super(eh, ac);

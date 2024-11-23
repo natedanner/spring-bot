@@ -22,9 +22,7 @@ public class RoomWelcomeEventConsumer implements ActionConsumer {
 	private ResponseHandlers rh;
 	private final Function<MemberAction, Message> welcomeMessageBuilder;
 	
-	public final static Function<MemberAction, Message> DEFAULT_MESSAGE_BUILDER = ma -> { 
-		return Message.of("Welcome "+ma.getUser().getName()+" to "+ma.getAddressable().getName()+".  Please type /help if you want to talk to me.");
-	};
+	public static final Function<MemberAction, Message> DEFAULT_MESSAGE_BUILDER = ma -> Message.of("Welcome "+ma.getUser().getName()+" to "+ma.getAddressable().getName()+".  Please type /help if you want to talk to me.");
 	
 	public RoomWelcomeEventConsumer(ResponseHandlers rh, Function<MemberAction, Message> welcomeMessageBuilder) {
 		super();

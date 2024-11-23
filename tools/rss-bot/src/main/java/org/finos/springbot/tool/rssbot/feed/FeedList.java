@@ -12,11 +12,11 @@ import org.finos.springbot.workflow.annotations.Work;
 		view = "feedlist-view")
 public class FeedList {
 	
-	List<Feed> feeds = new ArrayList<Feed>();
-	boolean paused = false;
-	boolean adminOnly = false;
+	List<Feed> feeds = new ArrayList<>();
+	boolean paused;
+	boolean adminOnly;
 	Integer updateIntervalMinutes = 60;
-	List<Filter> filters = new ArrayList<Filter>();
+	List<Filter> filters = new ArrayList<>();
 
 	public List<Filter> getFilters() {
 		return filters;

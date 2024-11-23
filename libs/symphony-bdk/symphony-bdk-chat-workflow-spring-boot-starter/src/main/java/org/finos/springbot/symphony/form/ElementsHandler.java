@@ -76,9 +76,7 @@ public class ElementsHandler {
 			// if we're not in a room, address the user directly.
 			Addressable from = rr == null ? u : rr;
 			
-			FormAction ea = validationProcessor.validationCheck(verb, rr, currentForm, () -> {
-				return new FormAction(from, u, currentForm, verb, data);
-			});
+			FormAction ea = validationProcessor.validationCheck(verb, rr, currentForm, () -> new FormAction(from, u, currentForm, verb, data));
 			
 			if (ea != null) {
 				try {
@@ -93,7 +91,7 @@ public class ElementsHandler {
 				} finally {
 					Action.CURRENT_ACTION.set(Action.NULL_ACTION);
 				}	
-			};
+			}
 		} catch (Exception e) {
 			LOG.error("Couldn't handle event "+event, e);
 		}

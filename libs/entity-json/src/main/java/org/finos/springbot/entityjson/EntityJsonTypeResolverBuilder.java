@@ -242,8 +242,7 @@ public class EntityJsonTypeResolverBuilder extends DefaultTypeResolverBuilder {
 						idMetadata.include = Inclusion.PAYLOAD_PROPERTY;
 					}
 					
-					WritableTypeId out = super.writeTypePrefix(g, idMetadata);
-					return out;
+					return super.writeTypePrefix(g, idMetadata);
 				}
 			};
 		} else {

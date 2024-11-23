@@ -54,8 +54,7 @@ public class StateStorageBasedTeamsConversations extends AbstractTeamsConversati
 		filters.add(new Filter(ADDRESSABLE_INFO));
 		filters.add(new Filter(ADDRESSABLE_TYPE, CHAT, "="));
 		Iterable<Map<String, Object>> it = tss.retrieve(filters, false);
-		Set<TeamsChat> out = new HashSet<>(StateStorageBasedTeamsHistory.findObjectsFromItems(TeamsChat.class, it));
-		return out;
+		return new HashSet<>(StateStorageBasedTeamsHistory.findObjectsFromItems(TeamsChat.class, it));
 	}
 
 	@Override
@@ -77,7 +76,7 @@ public class StateStorageBasedTeamsConversations extends AbstractTeamsConversati
 		} else {
 			List<Map<String, Object>> list = Collections.singletonList(data.get());
 			List<TeamsChat> out =  StateStorageBasedTeamsHistory.findObjectsFromItems(TeamsChat.class, list);
-			if (out.size() > 0) {
+			if (!out.isEmpty()) {
 				return out.get(0);
 			} else {
 				return null;

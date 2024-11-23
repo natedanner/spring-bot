@@ -70,7 +70,7 @@ public class MessageActivityHandler extends TeamsActivityHandler {
 			
 			try {
 				CurrentTurnContext.CURRENT_CONTEXT.set(turnContext);
-				Action action = (a.getValue() != null) ? processForm(turnContext, a) : processMessage(turnContext, a);
+				Action action = a.getValue() != null ? processForm(turnContext, a) : processMessage(turnContext, a);
 			
 				if (action != null) {
 					Action.CURRENT_ACTION.set(action);
@@ -100,9 +100,7 @@ public class MessageActivityHandler extends TeamsActivityHandler {
 		TeamsUser u = teamsConversations.getUser(a.getFrom());
 		TeamsAddressable from = takeUser(rr) ? u : rr;
 		Map<String, Object> data = retrieveData(messageId, from);
-		return validationProcessor.validationCheck(action, from, form, () -> {
-			return new FormAction(from, u, form, action, data);
-		});
+		return validationProcessor.validationCheck(action, from, form, () -> new FormAction(from, u, form, action, data));
 	}
 
 	private boolean takeUser(TeamsAddressable rr) {
@@ -120,9 +118,7 @@ public class MessageActivityHandler extends TeamsActivityHandler {
 		Message message = createMessageFromActivity(a, rr);
 		
 		rr = takeUser(rr) ? u : rr;
-		SimpleMessageAction sma = new SimpleMessageAction(rr, u, message, data);
-		
-		return sma;
+		return new SimpleMessageAction(rr, u, message, data);
 	}
 
 	private Message createMessageFromActivity(Activity a, TeamsAddressable within) {

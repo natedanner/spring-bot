@@ -36,8 +36,7 @@ public final class EntityJson extends LinkedHashMap<String, Object>{
 		StringBuilder manipulated = new StringBuilder(cl.getCanonicalName());
 		int idx = manipulated.lastIndexOf(".");
 		manipulated.setCharAt(idx+1, Character.toLowerCase(manipulated.charAt(idx+1)));
-		String id = manipulated.toString();
-		return id;
+		return manipulated.toString();
 	}
 	
 }

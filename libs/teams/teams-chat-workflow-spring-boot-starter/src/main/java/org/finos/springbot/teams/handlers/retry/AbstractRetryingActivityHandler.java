@@ -34,7 +34,7 @@ public abstract class AbstractRetryingActivityHandler implements ActivityHandler
 				&& ((CompletionException) e).getCause() instanceof ErrorResponseException) {
 			ErrorResponseException ere = (ErrorResponseException) ((CompletionException) e).getCause();
 			retrofit2.Response<ResponseBody> response = ere.response();
-			return (response.code() == HttpStatus.TOO_MANY_REQUESTS.value());
+			return response.code() == HttpStatus.TOO_MANY_REQUESTS.value();
 		} else {
 			return false;
 		}

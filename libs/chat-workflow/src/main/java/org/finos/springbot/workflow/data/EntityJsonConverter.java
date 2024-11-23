@@ -57,8 +57,7 @@ public class EntityJsonConverter implements DataHandler {
 		} catch (ClassNotFoundException e1) {
 			throw new UnsupportedOperationException("Couldn't get class: " + formId);
 		}
-		Object updated = om.convertValue(json, c);
-		return updated;
+		return om.convertValue(json, c);
 	}
 
 	public ObjectMapper getObjectMapper() {

@@ -18,8 +18,9 @@ public class NestedWork {
 		}
 		
 	}
-	
-	Inner a, b;
+
+	Inner a;
+	Inner b;
 
 	public Inner getA() {
 		return a;

@@ -11,7 +11,7 @@ public interface Heading extends OrderedContent<Word> {
 		return of(
 				level,
 				Arrays.stream(str.split("\\s"))
-					.map(s -> Word.of(s))
+					.map(Word::of)
 					.toArray(Word[]::new));
 	}
 	

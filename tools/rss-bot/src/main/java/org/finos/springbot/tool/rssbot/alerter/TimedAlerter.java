@@ -104,7 +104,7 @@ public class TimedAlerter {
 	
 	@Scheduled(cron = "0 0 0 4 * *")
 	public void firstOfTheMonth() {
-		onAllStreams(s -> pauseRunningStreams(s));
+		onAllStreams(this::pauseRunningStreams);
 	}
 
 	private int pauseRunningStreams(Addressable a) {

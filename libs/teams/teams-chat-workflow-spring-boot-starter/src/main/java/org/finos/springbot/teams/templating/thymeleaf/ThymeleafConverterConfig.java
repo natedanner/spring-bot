@@ -57,7 +57,7 @@ public class ThymeleafConverterConfig {
 	@Bean
 	@Qualifier("thymeleaf")
 	protected TimeConverter<String> tlTimeConverter(ThymeleafRendering r) {
-		return new TimeConverter<String>(r);
+		return new TimeConverter<>(r);
 	}
 	
 	@Bean

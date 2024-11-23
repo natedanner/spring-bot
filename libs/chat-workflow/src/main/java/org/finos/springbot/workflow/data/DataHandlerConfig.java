@@ -1,6 +1,7 @@
 package org.finos.springbot.workflow.data;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -67,8 +68,8 @@ public class DataHandlerConfig {
 			toAdd.addAll(user);
 		}
 		
-		List<VersionSpace> versionSpaces = toAdd.stream()
-			.map(bd -> bd.getBeanClassName()) 
+		return toAdd.stream()
+			.map(BeanDefinition::getBeanClassName) 
 			.map(s -> {
 				try {
 					// nosemgrep
@@ -78,10 +79,10 @@ public class DataHandlerConfig {
 					return null;
 				}
 			})
-			.filter(x -> x != null) 
+			.filter(Objects::nonNull) 
 			.flatMap(c -> {
 				Work w = c.getAnnotation(Work.class);
-				String jsonTypeName[] = w.jsonTypeName();
+				String[] jsonTypeName = w.jsonTypeName();
 				return IntStream.range(0, jsonTypeName.length)
 						.mapToObj(i -> {
 							String t = jsonTypeName[i];
@@ -97,14 +98,12 @@ public class DataHandlerConfig {
 						});
 				})
 			.collect(Collectors.toList());
-		return versionSpaces;
 	}
 
 	private static String getPackageName(Class<?> c) {
 		String cn = c.getName();
         int dot = cn.lastIndexOf('.');
-        String pn = (dot != -1) ? cn.substring(0, dot).intern() : "";
-        return pn;
+        return dot != -1 ? cn.substring(0, dot).intern() : "";
 	}
 
 }

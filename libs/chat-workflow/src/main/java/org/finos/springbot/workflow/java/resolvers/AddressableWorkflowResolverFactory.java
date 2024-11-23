@@ -43,7 +43,7 @@ public class AddressableWorkflowResolverFactory implements WorkflowResolverFacto
 
 		@Override
 		public boolean canResolve(Class<?> cl) {
-			return (Addressable.class.isAssignableFrom(cl));
+			return Addressable.class.isAssignableFrom(cl);
 		}
 	}
 

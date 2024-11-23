@@ -45,7 +45,7 @@ public abstract class AbstractStateStorageTest {
 	@Test
 	public void testStoreWithTagDates() throws IOException {
 		Map<String, Object> somedata = Collections.singletonMap("a", "b");
-		Map<String, String> tags = new HashMap<String, String>();
+		Map<String, String> tags = new HashMap<>();
 		tags.put("date", "20220513");
 		tags.put("name", "rob");
 
@@ -75,15 +75,15 @@ public abstract class AbstractStateStorageTest {
 	@Test
 	public void testSlashStoreWithMultipleDirectories() throws IOException {
 		Map<String, Object> somedata = Collections.singletonMap("a", "b");
-		Map<String, String> tagsForTheFile = new HashMap<String, String>();
+		Map<String, String> tagsForTheFile = new HashMap<>();
 		tagsForTheFile.put("addressable", "one");
 		tagsForTheFile.put("object1", "tag");
 
-		Map<String, String> tagsForTheFileA = new HashMap<String, String>();
+		Map<String, String> tagsForTheFileA = new HashMap<>();
 		tagsForTheFileA.put("addressable", "one");
 		tagsForTheFileA.put("object2", "tag");
 		
-		Map<String, String> tagsForTheFileB = new HashMap<String, String>();
+		Map<String, String> tagsForTheFileB = new HashMap<>();
 		tagsForTheFileB.put("addressable", "two");
 		tagsForTheFileB.put("object2", "tag");
 		
@@ -107,8 +107,7 @@ public abstract class AbstractStateStorageTest {
 	}
 	
 	public List<Map<String, Object>> hoover(Iterable<Map<String, Object>> iterable) {
-		List<Map<String, Object>> result =  StreamSupport.stream(iterable.spliterator(), false)
+		return StreamSupport.stream(iterable.spliterator(), false)
 			    .collect(Collectors.toList());
-		return result;
 	}
 }

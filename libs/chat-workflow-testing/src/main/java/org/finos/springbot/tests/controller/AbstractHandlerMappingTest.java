@@ -36,9 +36,9 @@ public abstract class AbstractHandlerMappingTest {
 	
 	public static final String BOT_NAME = "Dummy Bot";
 	public static final String BOT_EMAIL = "dummybot@example.com";
-	public static final long BOT_ID = 654321l;
+	public static final long BOT_ID = 654321L;
 	public static final String ROB_EXAMPLE_EMAIL = "rob@example.com";
-	public static final long ROB_EXAMPLE_ID = 765l;
+	public static final long ROB_EXAMPLE_ID = 765L;
 	public static final String ROB_NAME =  "Robert Moffat";
 	public static final String CHAT_ID = "abc123";
 

@@ -55,11 +55,7 @@ public class WorkResponseConverter extends AbstractResponseConverter {
 		
 		Class<?> c = in.getClass();
 		Work work = c.getAnnotation(Work.class);
-		if (work != null) {
-			return true;
-		}
-		
-		return false;
+		return work != null;
 	}
 
 	@Override

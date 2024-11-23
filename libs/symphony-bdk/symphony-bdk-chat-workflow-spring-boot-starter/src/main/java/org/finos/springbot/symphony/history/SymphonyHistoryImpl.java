@@ -3,6 +3,7 @@ package org.finos.springbot.symphony.history;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -20,9 +21,9 @@ import com.symphony.bdk.gen.api.model.V4Message;
 
 public class SymphonyHistoryImpl implements SymphonyHistory {
 
-	private EntityJsonConverter jsonConverter;
-	private MessageService messageApi;
-	private StreamResolver sr;
+	private final EntityJsonConverter jsonConverter;
+	private final MessageService messageApi;
+	private final StreamResolver sr;
 
 	public SymphonyHistoryImpl(EntityJsonConverter jsonConverter, MessageService messageApi, StreamResolver sr) {
 		this.jsonConverter = jsonConverter;
@@ -85,8 +86,8 @@ public class SymphonyHistoryImpl implements SymphonyHistory {
 
 	@Override
 	public <X> List<X> getFromEntityJson(List<EntityJson> ej, Class<X> type) {
-		return ej.stream().map(i -> getRelevantObject(Optional.of(i), type)).filter(o -> o.isPresent())
-				.map(o -> o.get()).collect(Collectors.toList());
+		return ej.stream().map(i -> getRelevantObject(Optional.of(i), type)).filter(Optional::isPresent)
+				.map(Optional::get).collect(Collectors.toList());
 	}
 
 	@Override
@@ -94,7 +95,7 @@ public class SymphonyHistoryImpl implements SymphonyHistory {
 		MessageSearchQuery msq = createMessageSearchQuery(null, address, since, t);
 		PaginationAttribute pa = new PaginationAttribute(0, 50);
 		List<V4Message> out = messageApi.searchMessages(msq, pa);
-		return out.stream().map(msg -> getEntityJson(msg)).filter(e -> e != null).collect(Collectors.toList());
+		return out.stream().map(this::getEntityJson).filter(Objects::nonNull).collect(Collectors.toList());
 	}
 
 	protected EntityJson getEntityJson(V4Message msg) {
@@ -134,7 +135,7 @@ public class SymphonyHistoryImpl implements SymphonyHistory {
 	@Override
 	public <X> List<X> getFromHistory(Class<X> type, SymphonyAddressable address, Instant since) {
 		return getEntityJsonFromHistory(type, address, since).stream()
-				.map(ej -> getRelevantObject(Optional.of(ej), type)).filter(o -> o.isPresent()).map(o -> o.get())
+				.map(ej -> getRelevantObject(Optional.of(ej), type)).filter(Optional::isPresent).map(Optional::get)
 				.collect(Collectors.toList());
 	}
 
@@ -143,7 +144,7 @@ public class SymphonyHistoryImpl implements SymphonyHistory {
 		MessageSearchQuery msq = createMessageSearchQuery(type, address, since, null);
 		PaginationAttribute pa = new PaginationAttribute(0, 50);
 		List<V4Message> out = messageApi.searchMessages(msq, pa);
-		return out.stream().map(msg -> getEntityJson(msg)).filter(e -> e != null).collect(Collectors.toList());
+		return out.stream().map(this::getEntityJson).filter(Objects::nonNull).collect(Collectors.toList());
 	}
 
 	private <X> MessageSearchQuery createMessageSearchQuery(Class<X> type, Addressable address, Instant since, String t) {

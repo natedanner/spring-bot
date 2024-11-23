@@ -79,7 +79,7 @@ public class StateStorageBasedTeamsHistory implements TeamsHistory {
 	@SuppressWarnings("unchecked")
 	public static <X> List<X> findObjectsFromItems(Class<X> type, Iterable<Map<String, Object>> data) {
 		Iterator<Map<String, Object>> it = data.iterator();
-		List<X> out = new ArrayList<X>();
+		List<X> out = new ArrayList<>();
 		while (it.hasNext()) {
 			Map<String, Object> map = it.next();
 			for (Object val : map.values()) {

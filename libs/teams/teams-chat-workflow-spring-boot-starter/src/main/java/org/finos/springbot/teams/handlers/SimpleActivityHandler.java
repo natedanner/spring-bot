@@ -10,7 +10,7 @@ import com.microsoft.bot.schema.ResourceResponse;
 
 public class SimpleActivityHandler implements ActivityHandler {
 
-	private TeamsConversations tc;
+	private final TeamsConversations tc;
 
 	public SimpleActivityHandler(TeamsConversations tc) {
 		this.tc = tc;

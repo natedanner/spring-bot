@@ -37,12 +37,15 @@ public class ClassWithArray {
 		}
 		@Override
 		public boolean equals(Object obj) {
-			if (this == obj)
+			if (this == obj) {
 				return true;
-			if (obj == null)
+			}
+			if (obj == null) {
 				return false;
-			if (getClass() != obj.getClass())
+			}
+			if (getClass() != obj.getClass()) {
 				return false;
+			}
 			SubClass other = (SubClass) obj;
 			return Objects.equals(a, other.a) && Objects.equals(b, other.b);
 		}
@@ -85,12 +88,15 @@ public class ClassWithArray {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		ClassWithArray other = (ClassWithArray) obj;
 		return Objects.equals(l, other.l) && Objects.equals(m, other.m);
 	}

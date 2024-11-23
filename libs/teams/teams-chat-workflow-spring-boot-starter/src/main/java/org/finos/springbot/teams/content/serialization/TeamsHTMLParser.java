@@ -35,8 +35,8 @@ import com.microsoft.bot.schema.Entity;
  *
  */
 public class TeamsHTMLParser extends AbstractContentParser<String, ParseContext> {
-	
-	private ApplicationContext ctx;
+
+	private final ApplicationContext ctx;
 	private TeamsConversations tc;
 	
 	public TeamsHTMLParser(ApplicationContext ctx) {

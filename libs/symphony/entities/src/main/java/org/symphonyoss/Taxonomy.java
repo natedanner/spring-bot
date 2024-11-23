@@ -1,6 +1,7 @@
 package org.symphonyoss;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Taxonomy {
 
@@ -27,24 +28,29 @@ public class Taxonomy {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (id == null ? 0 : id.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Taxonomy other = (Taxonomy) obj;
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!taxonomyPartMatch(id, other.id)) 
+			}
+		} else if (!taxonomyPartMatch(id, other.id)) {
 			return false;
+		}
 		return true;
 	}
 	
@@ -62,10 +68,10 @@ public class Taxonomy {
 
 	protected String fromTaxonomy(Class<?> class1) {
 		return getId().stream()
-			.filter(t -> t != null)
+			.filter(Objects::nonNull)
 			.filter(t -> class1.isAssignableFrom(t.getClass()))
 			.findFirst()
-			.map(te -> te.getValue())
+			.map(TaxonomyElement::getValue)
 			.orElse(null);
 	}
 

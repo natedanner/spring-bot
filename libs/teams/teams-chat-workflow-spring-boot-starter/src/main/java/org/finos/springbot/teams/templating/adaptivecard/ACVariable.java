@@ -53,8 +53,7 @@ public class ACVariable implements Variable {
 	}
 
 	public String getFormFieldName() {
-		String out = FORM_IDENTIFIER + formPath;
-		return out;
+		return FORM_IDENTIFIER + formPath;
 	}
 	
 	public String getFormIncrement() {

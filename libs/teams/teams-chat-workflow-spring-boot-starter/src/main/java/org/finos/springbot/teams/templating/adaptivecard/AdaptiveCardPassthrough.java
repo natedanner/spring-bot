@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public class AdaptiveCardPassthrough {
 
-	private final static String ADAPTIVE_CARD = "AdaptiveCard";
-	private final static String ADAPTIVE_CARD_TYPE = "type";
+	private static final String ADAPTIVE_CARD = "AdaptiveCard";
+	private static final String ADAPTIVE_CARD_TYPE = "type";
 
 	private final JsonNode jsonNode;
 

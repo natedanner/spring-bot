@@ -89,13 +89,13 @@ public class TestSerialization {
 	public void testClassWithArray() throws Exception {
 		ClassWithArray cwe = new ClassWithArray();
 		
-		ArrayList<SubClass> vals1 = new ArrayList<SubClass>();
+		ArrayList<SubClass> vals1 = new ArrayList<>();
 		vals1.add(new SubClass("la1", "lb1"));
 		vals1.add(new SubClass("la2", "lb2"));
 		vals1.add(new SubClass("la3", "lb3"));
 		cwe.setL(vals1);
 		
-		ArrayList<SubClass> vals2 = new ArrayList<SubClass>();
+		ArrayList<SubClass> vals2 = new ArrayList<>();
 		vals2.add(new SubClass("ma1", "mb1"));
 		vals2.add(new SubClass("ma2", "mb2"));
 		vals2.add(new SubClass("ma3", "mb3"));
@@ -210,8 +210,7 @@ public class TestSerialization {
 	
 	private String getExpected(String name) {
 		InputStream io = getClass().getResourceAsStream(name+".json");
-		String result = new BufferedReader(new InputStreamReader(io))
+		return new BufferedReader(new InputStreamReader(io))
 				  .lines().collect(Collectors.joining("\n"));
-		return result;
 	}
 }

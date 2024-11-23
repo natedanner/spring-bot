@@ -33,7 +33,7 @@ public class TeamsFormDeserializerModule extends Module {
 			TeamsFormDeserializerModule.class.getPackage().getName().toLowerCase(), 
 			"teams-form-deserializer-module");
 
-	private AllConversations tc;
+	private final AllConversations tc;
 	
 
 	@Override

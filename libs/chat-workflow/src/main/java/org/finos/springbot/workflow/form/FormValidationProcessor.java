@@ -20,8 +20,8 @@ import org.springframework.validation.Validator;
  */
 public class FormValidationProcessor {
 
-	private Validator v;
-	private ResponseHandlers rh;
+	private final Validator v;
+	private final ResponseHandlers rh;
 	
 	public FormValidationProcessor(Validator v, ResponseHandlers rh) {
 		super();
@@ -53,8 +53,8 @@ public class FormValidationProcessor {
 
 	public static ErrorMap convertErrorsToMap(Errors e) {
 		return e == null ? new ErrorMap() : new ErrorMap(e.getAllErrors().stream()
-			.map(err -> (FieldError) err)
-			.collect(Collectors.toMap(fe -> fe.getField(), fe -> ""+fe.getDefaultMessage())));
+			.map(FieldError.class::cast)
+			.collect(Collectors.toMap(FieldError::getField, fe -> ""+fe.getDefaultMessage())));
 	}
 
 

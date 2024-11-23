@@ -38,7 +38,7 @@ public abstract class AbstractOrderedContent<C extends Content> implements Order
 	@Override
 	public String getText() {
 		return getContents().stream()
-			.map(e -> e.getText())
+			.map(Content::getText)
 			.reduce("", (a, b) -> {
 				if (a.length() == 0 || b.length() == 0) {
 					return a+b;

@@ -26,7 +26,7 @@ public class Article {
 		this.feedName = feedName;
 		this.author = author;
 		this.uri = uri;
-		this.feedUrls = fl.feeds.stream().map(f -> f.getUrl()).collect(Collectors.toList());
+		this.feedUrls = fl.feeds.stream().map(Feed::getUrl).collect(Collectors.toList());
 		this.feedHashTag = feedHashTag;
 		this.articleHashTag = articleHashTag;
 	}

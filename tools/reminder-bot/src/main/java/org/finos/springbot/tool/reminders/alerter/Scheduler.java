@@ -42,7 +42,7 @@ public class Scheduler {
 
 	@Scheduled(cron = "0 0/5 * * * MON-FRI")
     public void everyFiveMinutesWeekday() {
-        onAllStreams(s -> handleFeed(s));
+        onAllStreams(this::handleFeed);
     }
     
     public void onAllStreams(Consumer<Addressable> action) {
@@ -50,7 +50,7 @@ public class Scheduler {
 
   //      if (leaderService.isLeader(self)) {
             Set<Chat> allRooms = rooms.getAllChats();
-			allRooms.forEach(s -> action.accept(s));
+			allRooms.forEach(action::accept);
             LOG.info("TimedAlerter processed " + allRooms.size() + " streams ");
 //        } else {
 //            LOG.info("Not leader, sleeping");
@@ -69,7 +69,7 @@ public class Scheduler {
 			    ZoneOffset zo = zone.getRules().getOffset(currentTime);
 
 
-			    fl.get().getReminders().stream().forEach((currentReminder) -> {
+			    fl.get().getReminders().stream().forEach(currentReminder -> {
 			        Instant timeForReminder = currentReminder.getLocalTime().toInstant(zo);
 
 			        if (timeForReminder.isBefore(currentTime)) {

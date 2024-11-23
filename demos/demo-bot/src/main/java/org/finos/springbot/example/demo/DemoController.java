@@ -3,6 +3,7 @@ package org.finos.springbot.example.demo;
 import org.finos.springbot.workflow.annotations.ChatRequest;
 import org.finos.springbot.workflow.annotations.ChatVariable;
 import org.finos.springbot.workflow.content.Addressable;
+import org.finos.springbot.workflow.content.Content;
 import org.finos.springbot.workflow.content.Word;
 import org.finos.springbot.workflow.response.MessageResponse;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ public class DemoController {
     @ChatRequest(value = "echo {echoMessage}", helpOrder = 2, description = "Button display suppressed as this command requires parameter")
     public MessageResponse missingChatButton(@ChatVariable(name = "echoMessage") List<Word> msg, Addressable a) {
         String strMsg = msg.stream()
-                .map(word -> word.getText())
+                .map(Content::getText)
                 .collect(Collectors.joining(" "));
 
         if(!StringUtils.hasText(strMsg)) {

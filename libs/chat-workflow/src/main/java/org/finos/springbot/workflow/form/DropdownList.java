@@ -50,12 +50,15 @@ public class DropdownList {
 		
 		@Override
 		public boolean equals(Object obj) {
-			if (this == obj)
+			if (this == obj) {
 				return true;
-			if (obj == null)
+			}
+			if (obj == null) {
 				return false;
-			if (getClass() != obj.getClass())
+			}
+			if (getClass() != obj.getClass()) {
 				return false;
+			}
 			Item other = (Item) obj;
 			return Objects.equals(key, other.key) && Objects.equals(name, other.name);
 		}
@@ -74,7 +77,7 @@ public class DropdownList {
 	}
 
 	public DropdownList() {
-		this.contents = new ArrayList<Item>();
+		this.contents = new ArrayList<>();
 	}
 
 	public DropdownList(Collection<Item> arg0) {

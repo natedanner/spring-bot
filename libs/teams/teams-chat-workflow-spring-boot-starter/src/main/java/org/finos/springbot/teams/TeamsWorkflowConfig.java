@@ -245,8 +245,7 @@ public class TeamsWorkflowConfig implements InitializingBean {
 		return new InRoomAddressingChecker(() -> {
 			TurnContext tc = CurrentTurnContext.CURRENT_CONTEXT.get();
 			ChannelAccount recipient = tc.getActivity().getRecipient();
-			User u = conv.getUser(recipient);	
-			return u;
+			return conv.getUser(recipient);
 		}, true);
 	}
 	

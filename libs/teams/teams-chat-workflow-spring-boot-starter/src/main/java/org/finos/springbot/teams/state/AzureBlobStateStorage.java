@@ -120,13 +120,13 @@ public class AzureBlobStateStorage extends AbstractStateStorage {
 		
 	}
 
-	private static final Map<String, Object> DONE = new HashMap<String, Object>();
+	private static final Map<String, Object> DONE = new HashMap<>();
 
 	class DuplicateCheckingIterator implements Iterator<Map<String, Object>> {
 		
-		Set<String> done = new HashSet<String>();
+		Set<String> done = new HashSet<>();
 		Iterator<TaggedBlobItem> underlying;
-		Map<String, Object> next = null;
+		Map<String, Object> next;
 		
 		public DuplicateCheckingIterator(Iterator<TaggedBlobItem> underlying) {
 			super();
@@ -176,8 +176,7 @@ public class AzureBlobStateStorage extends AbstractStateStorage {
 			
 			try {
 				String json = StreamUtils.copyToString(bcc.getBlobClient(name).openInputStream(), StandardCharsets.UTF_8);
-				EntityJson data = ejc.readValue(json);
-				return data;
+				return ejc.readValue(json);
 			} catch (Exception e) {
 				LOG.error("Couldn't retreive blob: "+name);
 				return null;
@@ -187,7 +186,7 @@ public class AzureBlobStateStorage extends AbstractStateStorage {
 
 	@Override
 	public Iterable<Map<String, Object>> retrieve(List<Filter> tags, boolean singleResultOnly) {
-		return new Iterable<Map<String,Object>>() {
+		return new Iterable<>() {
 			
 			@Override
 			public Iterator<Map<String, Object>> iterator() {

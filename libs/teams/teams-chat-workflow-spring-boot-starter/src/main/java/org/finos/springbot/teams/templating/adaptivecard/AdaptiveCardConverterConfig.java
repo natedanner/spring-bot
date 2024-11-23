@@ -35,7 +35,7 @@ public class AdaptiveCardConverterConfig {
 	@Bean
 	@Qualifier("adaptivecard")
 	protected BeanConverter<JsonNode> acBeanConverter(AdaptiveCardRendering r) {
-		return new BeanConverter<JsonNode>(r);
+		return new BeanConverter<>(r);
 	}
 	
 	@Bean
@@ -59,7 +59,7 @@ public class AdaptiveCardConverterConfig {
 	@Bean
 	@Qualifier("adaptivecard")
 	protected TimeConverter<JsonNode> acTimeConverter(AdaptiveCardRendering r) {
-		return new TimeConverter<JsonNode>(r);
+		return new TimeConverter<>(r);
 	}
 	
 	@Bean

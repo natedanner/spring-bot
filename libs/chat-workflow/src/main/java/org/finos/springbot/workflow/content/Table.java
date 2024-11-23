@@ -1,5 +1,6 @@
 package org.finos.springbot.workflow.content;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,11 +31,11 @@ public interface Table extends Content {
 		@Override
 		public String getText() {
 			return getColumnNames().stream()
-				.map(e -> e.getText())
+				.map(Content::getText)
 				.reduce("", (a, b) -> a + " " + b) + 
 				getData().stream()
-				.flatMap(e -> e.stream())
-				.map(e -> e.getText())
+				.flatMap(Collection::stream)
+				.map(Content::getText)
 				.reduce("", (a, b) -> a + " " + b);
 		}
 		

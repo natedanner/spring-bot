@@ -36,8 +36,7 @@ public class JavascriptSubstitution {
 	}
 
 	private Value load(String f) throws IOException {
-		Value out = ctx.eval("js", StreamUtils.copyToString(AdaptiveCardTemplateProvider.class.getResourceAsStream(f), Charsets.UTF_8));
-		return out;
+		return ctx.eval("js", StreamUtils.copyToString(AdaptiveCardTemplateProvider.class.getResourceAsStream(f), Charsets.UTF_8));
 	}
 
 }

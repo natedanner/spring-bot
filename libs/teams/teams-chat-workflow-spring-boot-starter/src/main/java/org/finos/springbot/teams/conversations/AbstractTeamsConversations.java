@@ -39,10 +39,10 @@ import com.microsoft.bot.schema.ResourceResponse;
  *
  */
 public abstract class AbstractTeamsConversations implements TeamsConversations {
-	
-	private MicrosoftAppCredentials mac;
-	private BotFrameworkAdapter bfa;
-	private ChannelAccount botAccount;
+
+	private final MicrosoftAppCredentials mac;
+	private final BotFrameworkAdapter bfa;
+	private final ChannelAccount botAccount;
 	
 	public AbstractTeamsConversations(BotFrameworkAdapter bfa, MicrosoftAppCredentials mac, ChannelAccount botAccount) {
 		super();
@@ -202,7 +202,7 @@ public abstract class AbstractTeamsConversations implements TeamsConversations {
 				
 				String out = "Chat With "+participants.stream()
 						.limit(5)
-						.map(cm -> cm.getName())
+						.map(ChannelAccount::getName)
 						.collect(Collectors.joining(", "));
 				
 				if (participants.size() > 5) {

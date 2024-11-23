@@ -38,9 +38,7 @@ public abstract class AbstractResourceTemplateProvider<T, F, V extends DataRespo
 			LOG.info("Template: \n"+template);
 		}
 		
-		T out = applyTemplate(template, t);
-		
-		return out;
+		return applyTemplate(template, t);
 	}
 
 	protected abstract T applyTemplate(F template, V t);

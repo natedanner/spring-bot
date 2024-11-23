@@ -28,7 +28,7 @@ public class FeedLoader {
 	List<ProxyProperties> pp;
 	
 	public FeedLoader(List<ProxyProperties> proxy) {
-		if ((proxy == null) ||  (proxy.size() == 0)) {
+		if ((proxy == null) ||  (proxy.isEmpty())) {
 			ProxyProperties noProxy = new ProxyProperties();
 			noProxy.setHost(ProxyProperties.NO_PROXY);
 			this.pp = Collections.singletonList(noProxy);
@@ -42,8 +42,7 @@ public class FeedLoader {
 	public SyndFeed createSyndFeed(Feed f) throws Exception {
 		SyndFeedInput input = new SyndFeedInput();
 		input.setAllowDoctypes(true);
-		SyndFeed feed = input.build(new XmlReader(downloadContent(f.getUrl(), f.getProxy())));
-		return feed;
+		return input.build(new XmlReader(downloadContent(f.getUrl(), f.getProxy())));
 	}
 	
 	public Feed createFeed(String url, String name) throws FeedException {

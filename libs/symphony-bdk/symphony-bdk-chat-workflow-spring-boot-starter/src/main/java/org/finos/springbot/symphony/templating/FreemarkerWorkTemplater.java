@@ -35,14 +35,14 @@ public class FreemarkerWorkTemplater extends AbstractTopLevelConverter<String, W
 		sb.append("\n<#-- starting template -->");
 		
 		if (m == Mode.FORM) {
-			sb.append("\n<form id=\"" + c.getCanonicalName() + "\">");
+			sb.append("\n<form id=\"").append(c.getCanonicalName()).append("\">");
 		} 
 		
 		sb.append(apply(null, this, c, m==Mode.FORM, v, topLevelFieldOutput()));
 		
 		if (m == Mode.DISPLAY_WITH_BUTTONS) {
 			// the form is created here just to contain these buttons.
-			sb.append("\n<form id=\"" + JUST_BUTTONS_FORM + "\">");
+			sb.append("\n<form id=\"").append(JUST_BUTTONS_FORM).append("\">");
 			sb.append(handleButtons());
 			sb.append("\n</form>");
 		} else if (m == Mode.FORM) { 

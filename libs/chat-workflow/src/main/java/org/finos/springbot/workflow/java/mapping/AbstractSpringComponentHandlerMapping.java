@@ -26,7 +26,7 @@ import org.springframework.util.ClassUtils;
 
 public abstract class AbstractSpringComponentHandlerMapping<T> extends ApplicationObjectSupport implements ChatHandlerMapping<T>, InitializingBean {
 
-	private boolean detectHandlerMethodsInAncestorContexts = false;
+	private boolean detectHandlerMethodsInAncestorContexts;
 	
 	protected MappingRegistry mappingRegistry = new MappingRegistry();
 	protected AllConversations conversations;
@@ -81,9 +81,9 @@ public abstract class AbstractSpringComponentHandlerMapping<T> extends Applicati
 	 * @see BeanFactoryUtils#beanNamesForTypeIncludingAncestors
 	 */
 	protected String[] getCandidateBeanNames() {
-		return (this.detectHandlerMethodsInAncestorContexts ?
+		return this.detectHandlerMethodsInAncestorContexts ?
 				BeanFactoryUtils.beanNamesForTypeIncludingAncestors(obtainApplicationContext(), Object.class) :
-				obtainApplicationContext().getBeanNamesForType(Object.class));
+				obtainApplicationContext().getBeanNamesForType(Object.class);
 	}
 	
 	/**
@@ -136,8 +136,8 @@ public abstract class AbstractSpringComponentHandlerMapping<T> extends Applicati
 	 * @see #getMappingForMethod
 	 */
 	protected void detectHandlerMethods(Object handler) {
-		Class<?> handlerType = (handler instanceof String ?
-				obtainApplicationContext().getType((String) handler) : handler.getClass());
+		Class<?> handlerType = handler instanceof String ?
+				obtainApplicationContext().getType((String) handler) : handler.getClass();
 
 		if (handlerType != null) {
 			Class<?> userType = ClassUtils.getUserClass(handlerType);
@@ -241,7 +241,7 @@ public abstract class AbstractSpringComponentHandlerMapping<T> extends Applicati
 
 		private void validateMethodMapping(ChatHandlerMethod handlerMethod, T mapping) {
 			ChatMapping<T> registration = this.registry.get(mapping);
-			ChatHandlerMethod existingHandlerMethod = (registration != null ? registration.getHandlerMethod() : null);
+			ChatHandlerMethod existingHandlerMethod = registration != null ? registration.getHandlerMethod() : null;
 			if (existingHandlerMethod != null && !existingHandlerMethod.equals(handlerMethod)) {
 				throw new IllegalStateException(
 						"Ambiguous mapping. Cannot map '" + handlerMethod.getBean() + "' method \n" +

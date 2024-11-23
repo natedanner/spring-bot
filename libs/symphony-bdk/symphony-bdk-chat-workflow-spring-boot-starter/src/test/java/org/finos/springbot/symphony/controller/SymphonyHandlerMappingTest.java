@@ -156,7 +156,7 @@ public class SymphonyHandlerMappingTest extends AbstractHandlerMappingTest {
 								.streamType(StreamType.TypeEnum.ROOM.getValue())
 								.streamId(CHAT_ID));
 		
-		RealTimeEvent<V4SymphonyElementsAction> event = new RealTimeEvent<V4SymphonyElementsAction>(initiator, action);
+		RealTimeEvent<V4SymphonyElementsAction> event = new RealTimeEvent<>(initiator, action);
 		
 		msg = ArgumentCaptor.forClass(com.symphony.bdk.core.service.message.model.Message.class);	
 		
@@ -205,9 +205,9 @@ public class SymphonyHandlerMappingTest extends AbstractHandlerMappingTest {
 
 			} else if("Display this help page".equalsIgnoreCase(desc)) { //help test
 				Assertions.assertTrue(commandNode.get("button").asBoolean());
-				Assertions.assertTrue(commandNode.get("type").asText()
-						.equalsIgnoreCase("org.finos.springbot.workflow.help.commandDescription")
-						&& commandNode.get("version").asText().equalsIgnoreCase("1.0"));
+				Assertions.assertTrue("org.finos.springbot.workflow.help.commandDescription"
+						.equalsIgnoreCase(commandNode.get("type").asText())
+						&& "1.0".equalsIgnoreCase(commandNode.get("version").asText()));
 			}
 		}
 

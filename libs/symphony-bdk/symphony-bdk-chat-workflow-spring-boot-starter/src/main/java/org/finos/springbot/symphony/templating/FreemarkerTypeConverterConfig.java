@@ -59,26 +59,26 @@ public class FreemarkerTypeConverterConfig {
 	@Bean
 	@Qualifier("freemarker")
 	public UserConverter<String> hashTagConverter(FreemarkerRendering r) {
-		return new UserConverter<String>(UserConverter.LOW_PRIORITY, r, SymphonyUser.class);
+		return new UserConverter<>(UserConverter.LOW_PRIORITY, r, SymphonyUser.class);
 	}
 
 	@Bean
 	@Qualifier("freemarker")
 	public TimeConverter<String> timeConverter(FreemarkerRendering r) {
-		return new TimeConverter<String>(r);
+		return new TimeConverter<>(r);
 	}
 	
 	@Bean
 	@Qualifier("freemarker")
 	protected TextFieldConverter<String> fmTextFieldConverter(FreemarkerRendering r) {
-		return new TextFieldConverter<String>(TextFieldConverter.LOW_PRIORITY, r, String.class, 
+		return new TextFieldConverter<>(TextFieldConverter.LOW_PRIORITY, r, String.class, 
 				Number.class, int.class, float.class, double.class, short.class, long.class, byte.class);
 	}
 	
 	@Bean
 	@Qualifier("freemarker")
 	protected ChatConverter<String> fmRoomConverter(FreemarkerRendering r) {
-		return new ChatConverter<String>(ChatConverter.LOW_PRIORITY, r, SymphonyRoom.class, Chat.class);
+		return new ChatConverter<>(ChatConverter.LOW_PRIORITY, r, SymphonyRoom.class, Chat.class);
 	}
 	
 	@Bean

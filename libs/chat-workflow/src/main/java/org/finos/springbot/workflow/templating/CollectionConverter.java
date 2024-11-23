@@ -38,7 +38,7 @@ public class CollectionConverter<X> extends AbstractComplexTypeConverter<X> {
 	
 	
 	protected WithField<X> collectionValues() {
-        return new WithField<X>() {
+        return new WithField<>() {
 
             @Override
             public boolean expand() {
@@ -48,8 +48,7 @@ public class CollectionConverter<X> extends AbstractComplexTypeConverter<X> {
             @Override
             public X apply(Field f, boolean editMode, Variable variable, WithType<X> contentHandler) {
             	Type t = f.getGenericType();
-            	X out = contentHandler.apply(null, contentHandler, t, editMode, variable, null);
-            	return out;
+            	return contentHandler.apply(null, contentHandler, t, editMode, variable, null);
             }
         };
 

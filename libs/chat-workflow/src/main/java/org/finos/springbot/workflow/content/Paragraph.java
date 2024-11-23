@@ -8,7 +8,7 @@ public interface Paragraph extends OrderedContent<Content> {
 	public static <X extends Content> Paragraph of(String str) {
 		return of(
 				Arrays.stream(str.split("\\s"))
-					.map(s -> Word.of(s))
+					.map(Word::of)
 					.toArray(Word[]::new));
 	}
 	

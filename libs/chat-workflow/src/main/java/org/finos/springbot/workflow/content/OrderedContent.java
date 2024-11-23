@@ -44,7 +44,7 @@ public interface OrderedContent<C extends Content> extends Content, Iterable<C> 
 				C newFirst = (C) first.removeAtStart(item);
 				List<C> sublist = getContents().subList(1, size());
 				if (newFirst != null) {
-					sublist = new ArrayList<C>(sublist);
+					sublist = new ArrayList<>(sublist);
 					sublist.add(0, newFirst);
 				}
 				return buildAnother(sublist);
@@ -118,7 +118,7 @@ public interface OrderedContent<C extends Content> extends Content, Iterable<C> 
 	 */
 	public default void visit(Consumer<Content> visitor) {
 		visitor.accept(this);
-		getContents().stream().forEach(i -> visitor.accept(i));
+		getContents().stream().forEach(visitor::accept);
 	}
 	 
 }

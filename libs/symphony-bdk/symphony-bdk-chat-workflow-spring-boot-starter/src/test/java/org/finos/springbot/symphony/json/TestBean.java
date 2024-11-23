@@ -85,47 +85,60 @@ public class TestBean {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (askAxed ? 1231 : 1237);
-		result = prime * result + ((askQty == null) ? 0 : askQty.hashCode());
+		result = prime * result + (askQty == null ? 0 : askQty.hashCode());
 		result = prime * result + (bidAxed ? 1231 : 1237);
-		result = prime * result + ((bidQty == null) ? 0 : bidQty.hashCode());
-		result = prime * result + ((creator == null) ? 0 : creator.hashCode());
-		result = prime * result + ((isin == null) ? 0 : isin.hashCode());
+		result = prime * result + (bidQty == null ? 0 : bidQty.hashCode());
+		result = prime * result + (creator == null ? 0 : creator.hashCode());
+		result = prime * result + (isin == null ? 0 : isin.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		TestBean other = (TestBean) obj;
-		if (askAxed != other.askAxed)
+		if (askAxed != other.askAxed) {
 			return false;
+		}
 		if (askQty == null) {
-			if (other.askQty != null)
+			if (other.askQty != null) {
 				return false;
-		} else if (!askQty.equals(other.askQty))
+			}
+		} else if (!askQty.equals(other.askQty)) {
 			return false;
-		if (bidAxed != other.bidAxed)
+		}
+		if (bidAxed != other.bidAxed) {
 			return false;
+		}
 		if (bidQty == null) {
-			if (other.bidQty != null)
+			if (other.bidQty != null) {
 				return false;
-		} else if (!bidQty.equals(other.bidQty))
+			}
+		} else if (!bidQty.equals(other.bidQty)) {
 			return false;
+		}
 		if (creator == null) {
-			if (other.creator != null)
+			if (other.creator != null) {
 				return false;
-		} else if (!creator.equals(other.creator))
+			}
+		} else if (!creator.equals(other.creator)) {
 			return false;
+		}
 		if (isin == null) {
-			if (other.isin != null)
+			if (other.isin != null) {
 				return false;
-		} else if (!isin.equals(other.isin))
+			}
+		} else if (!isin.equals(other.isin)) {
 			return false;
+		}
 		return true;
 	}
 

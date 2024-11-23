@@ -42,7 +42,7 @@ public class HeaderDetails {
 	private String description;
 	
 	@JsonDeserialize(contentConverter =  LegacyHeaderDeserialize.class)
-	private List<String> tags = new ArrayList<String>();
+	private List<String> tags = new ArrayList<>();
 	
 	public HeaderDetails() {
 		super();

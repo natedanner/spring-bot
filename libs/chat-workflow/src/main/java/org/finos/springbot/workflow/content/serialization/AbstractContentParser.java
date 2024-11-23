@@ -29,7 +29,7 @@ public abstract class AbstractContentParser<T, U> implements BiFunction<T, U, Co
 
 	protected static final Logger LOG = LoggerFactory.getLogger(AbstractContentParser.class);
 
-	protected static abstract class Frame<X extends Content> {
+	protected abstract static class Frame<X extends Content> {
 
 		public abstract X getContents();
 
@@ -42,7 +42,7 @@ public abstract class AbstractContentParser<T, U> implements BiFunction<T, U, Co
 		public abstract boolean hasContent();
 	}
 
-	protected static abstract class ContainerFrame<X extends Content> extends Frame<X> {
+	protected abstract static class ContainerFrame<X extends Content> extends Frame<X> {
 
 		String qName;
 
@@ -119,7 +119,7 @@ public abstract class AbstractContentParser<T, U> implements BiFunction<T, U, Co
 
 		@Override
 		public boolean hasContent() {
-			return contents.size() > 0;
+			return !contents.isEmpty();
 		}
 
 	}
@@ -186,12 +186,12 @@ public abstract class AbstractContentParser<T, U> implements BiFunction<T, U, Co
 
 		@Override
 		public boolean hasContent() {
-			return contents.size() > 0;
+			return !contents.isEmpty();
 		}
 
 	}
 
-	protected static abstract class TextFrame<X extends Content> extends ContainerFrame<X> {
+	protected abstract static class TextFrame<X extends Content> extends ContainerFrame<X> {
 
 		public TextFrame(String qName) {
 			super(qName);
@@ -208,7 +208,7 @@ public abstract class AbstractContentParser<T, U> implements BiFunction<T, U, Co
 		}
 	}
 
-	protected static abstract class TextRunFrame<X extends Content> extends TextFrame<X> {
+	protected abstract static class TextRunFrame<X extends Content> extends TextFrame<X> {
 
 		public TextRunFrame(String qName) {
 			super(qName);
@@ -222,7 +222,7 @@ public abstract class AbstractContentParser<T, U> implements BiFunction<T, U, Co
 		}
 
 		protected void consumeBuffer() {
-			Arrays.stream(buf.toString().split("\\s+")).filter(s -> s.length() > 0).map(s -> Word.of(s))
+			Arrays.stream(buf.toString().split("\\s+")).filter(s -> s.length() > 0).map(Word::of)
 					.forEach(w -> stuffSoFar.add(w));
 
 			buf.setLength(0);
@@ -230,7 +230,7 @@ public abstract class AbstractContentParser<T, U> implements BiFunction<T, U, Co
 
 		@Override
 		public boolean hasContent() {
-			return stuffSoFar.size() > 0;
+			return !stuffSoFar.isEmpty();
 		}
 	}
 

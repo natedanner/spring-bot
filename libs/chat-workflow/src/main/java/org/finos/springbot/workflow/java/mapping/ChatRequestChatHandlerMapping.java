@@ -35,8 +35,8 @@ import org.springframework.core.annotation.AnnotatedElementUtils;
 
 public class ChatRequestChatHandlerMapping extends AbstractSpringComponentHandlerMapping<ChatRequest> {
 
-	private WorkflowResolversFactory wrf;
-	private ResponseConverters converters;
+	private final WorkflowResolversFactory wrf;
+	private final ResponseConverters converters;
 	
 	public ChatRequestChatHandlerMapping(WorkflowResolversFactory wrf, ResponseConverters converters, AllConversations conversations) {
 		super(conversations);
@@ -55,11 +55,9 @@ public class ChatRequestChatHandlerMapping extends AbstractSpringComponentHandle
 
 	@Override
 	public List<ChatMapping<ChatRequest>> getHandlers(Action a) {
-		List<ChatMapping<ChatRequest>> out = getAllHandlers(a.getAddressable(), a.getUser()).stream()
+		return getAllHandlers(a.getAddressable(), a.getUser()).stream()
 				.filter(m -> m.getExecutor(a) != null)
 				.collect(Collectors.toList());
-
-		return out;
 	}
 
 	@Override
@@ -74,32 +72,27 @@ public class ChatRequestChatHandlerMapping extends AbstractSpringComponentHandle
 	@Override
 	public List<ChatHandlerExecutor> getExecutors(Action a) {
 		List<ChatMapping<ChatRequest>> allHandlers = getAllHandlers(a.getAddressable(), a.getUser());
-		List<ChatHandlerExecutor> out = allHandlers.stream()
+		return allHandlers.stream()
 				.map(m -> m.getExecutor(a))
-				.filter(f -> f != null)
+				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
-
-		return out;
 	}
 
 	protected List<MessageMatcher> createMessageMatchers(ChatRequest mapping, List<WildcardContent> chatVariables) {
-		List<MessageMatcher> parts = Arrays.stream(mapping.value()).map(str -> createContentPattern(str, chatVariables))
-				.map(cp -> new MessageMatcher(cp)).collect(Collectors.toList());
-
-		return parts;
+		return Arrays.stream(mapping.value()).map(str -> createContentPattern(str, chatVariables))
+				.map(MessageMatcher::new).collect(Collectors.toList());
 	}
 
-	private static WildcardContent UNBOUND_WILDCARD = new WildcardContent(null, Content.class, Arity.ONE);
+	private static final WildcardContent UNBOUND_WILDCARD = new WildcardContent(null, Content.class, Arity.ONE);
 
 	private Content createContentPattern(String str, List<WildcardContent> chatVariables) {
 		List<Content> items = Arrays.stream(str.split("\\s")).map(word -> {
 			if (word.startsWith("{") && word.endsWith("}")) {
 				String pathVariableName = word.substring(1, word.length() - 1);
-				WildcardContent out = chatVariables.stream()
+				return chatVariables.stream()
 						.filter(cv -> cv.chatVariable.name().equals(pathVariableName))
 						.findFirst()
 						.orElse(UNBOUND_WILDCARD);
-				return out;
 			} else {
 				String trimmedWord = word.trim();
 				return new Word() {
@@ -163,7 +156,7 @@ public class ChatRequestChatHandlerMapping extends AbstractSpringComponentHandle
 		List<WildcardContent> wildcards = createWildcardContent(mapping, handlerMethod);
 		List<MessageMatcher> matchers = createMessageMatchers(mapping, wildcards);
 
-		return new MappingRegistration<ChatRequest>(mapping, handlerMethod) {
+		return new MappingRegistration<>(mapping, handlerMethod) {
 
 			@Override
 			public ChatHandlerExecutor getExecutor(Action a) {

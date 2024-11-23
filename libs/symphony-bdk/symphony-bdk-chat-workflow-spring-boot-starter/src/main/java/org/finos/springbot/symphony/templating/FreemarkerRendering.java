@@ -29,7 +29,7 @@ public class FreemarkerRendering implements TableRendering<String> {
 
 	@Override
 	public String addFieldName(String field, String value) {
-		return !StringUtils.hasText(field) ? "" : "<tr><td style=\"width: 200px\"><b>" + field + ":</b></td><td>" + value + "</td></tr>";
+		return StringUtils.hasText(field) ? "<tr><td style=\"width: 200px\"><b>" + field + ":</b></td><td>" + value + "</td></tr>" : "";
 	}
 	
 	
@@ -271,14 +271,14 @@ public class FreemarkerRendering implements TableRendering<String> {
 	public String userDisplay(Variable v) {
 		StringBuilder sb = new StringBuilder();
 	    int depth = v.getDepth();
-		sb.append(indent(depth) + "<#if "+v.getDataPath() + "??><#if "+v.getDataPath() + ".id??><#list "+v.getDataPath() +".id as id>");
+		sb.append(indent(depth) + "<#if ").append(v.getDataPath()).append("??><#if ").append(v.getDataPath()).append(".id??><#list ").append(v.getDataPath()).append(".id as id>");
 		sb.append(indent(depth) + " <#if id??>");
-		sb.append(indent(depth) + " <#if id.type == '"+EntityJson.getEntityJsonTypeName(UserId.class)+"'><mention uid=\"${id.value}\" /><#break></#if>");
-		sb.append(indent(depth) + " <#if id.type == '"+EntityJson.getEntityJsonTypeName(EmailAddress.class)+"'><mention email=\"${id.value}\" /><#break></#if>");
+		sb.append(indent(depth) + " <#if id.type == '").append(EntityJson.getEntityJsonTypeName(UserId.class)).append("'><mention uid=\"${id.value}\" /><#break></#if>");
+		sb.append(indent(depth) + " <#if id.type == '").append(EntityJson.getEntityJsonTypeName(EmailAddress.class)).append("'><mention email=\"${id.value}\" /><#break></#if>");
 	    sb.append(indent(depth) + " </#if></#list>");
 	    
-	    sb.append(indent(depth) + " <#elseif "+v.getDataPath() + ".name??>");
-	    sb.append(indent(depth) +"  ${"+ v.getDataPath()+".name}");
+	    sb.append(indent(depth) + " <#elseif ").append(v.getDataPath()).append(".name??>");
+	    sb.append(indent(depth) + "  ${").append(v.getDataPath()).append(".name}");
 	    sb.append(indent(depth) + "</#if></#if>");
 	    return sb.toString();
 	}

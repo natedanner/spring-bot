@@ -112,8 +112,7 @@ public class TimeFinderIT {
 		rl.setTimeZone(ZoneId.of("Asia/Calcutta"));
 
 		rl.setReminders(reminders);
-		Optional<ReminderList> rrl = Optional.of(rl);
-		return rrl;
+		return Optional.of(rl);
 	}
 
 	private User getUser() {
@@ -122,7 +121,7 @@ public class TimeFinderIT {
 	}
 
 	private Message getMessage() {
-		Message m = new Message() {
+		return new Message() {
 			@Override
 			public List<Content> getContents() {
 				return null;
@@ -138,11 +137,10 @@ public class TimeFinderIT {
 				return "check at 9:30 pm";
 			}
 		};
-		return m;
 	}
 
 	private Addressable getAddressable() {
-		Addressable a = new Addressable() {
+		return new Addressable() {
 
 			@Override
 			public String getKey() {
@@ -151,7 +149,6 @@ public class TimeFinderIT {
 
 		
 		};
-		return a;
 
 	}
 

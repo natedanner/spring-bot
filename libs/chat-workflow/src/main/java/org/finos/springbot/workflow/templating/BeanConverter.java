@@ -37,7 +37,7 @@ public class BeanConverter<X> extends AbstractComplexTypeConverter<X> {
 	}
 
 	protected WithField<X> propertyPanel(WithField<X> inner) {
-		return new WithField<X>() {
+		return new WithField<>() {
 
             @Override
             public X apply(Field f, boolean editMode, Variable variable, WithType<X> controller) {

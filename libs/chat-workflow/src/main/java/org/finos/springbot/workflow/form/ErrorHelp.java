@@ -18,9 +18,7 @@ public class ErrorHelp {
 
 	public static String errors(Errors e) {
 		return e.getFieldErrors(null).stream()
-			.map(m -> {
-				return "<span class=\"tempo-text-color--red\">"+m.getDefaultMessage()+"</span>";
-			})
+			.map(m -> "<span class=\"tempo-text-color--red\">"+m.getDefaultMessage()+"</span>")
 			.reduce("", String::concat);
 	}
 

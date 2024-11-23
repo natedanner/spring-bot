@@ -46,7 +46,7 @@ public class FileStateStorageTest extends AbstractStateStorageTest {
 	public void testCantStoreMultipleNestedDirectories() throws IOException {
 		Map<String, Object> somedata = Collections.singletonMap("a", "b");
 
-		Map<String, String> tagsForTheFileB = new HashMap<String, String>();
+		Map<String, String> tagsForTheFileB = new HashMap<>();
 		tagsForTheFileB.put("addressable", "two");
 		tagsForTheFileB.put("object2", "tag");
 

@@ -26,7 +26,7 @@ public interface WithField<X> {
     default String getFieldNameOrientation(Field f) {
         return ofNullable(f.getAnnotation(Display.class)).map(display -> {
             if (display.visible()) {
-                return !display.name().trim().isEmpty() ? display.name() : fieldNameDefaultFormatter(f.getName());
+                return display.name().trim().isEmpty() ? fieldNameDefaultFormatter(f.getName()) : display.name();
             } else {
                 return "";
             }
@@ -35,9 +35,7 @@ public interface WithField<X> {
 
     default String fieldNameDefaultFormatter(String fieldName) {
         return Arrays.stream(Optional.ofNullable(fieldName).orElse("").split(DEFAULT_FORMATTER_PATTERN))
-                .map(word -> {
-                    return null != word && !word.trim().isEmpty() ? Character.toUpperCase(word.charAt(0)) + word.substring(1) : "";
-                })
+                .map(word -> null != word && !word.trim().isEmpty() ? Character.toUpperCase(word.charAt(0)) + word.substring(1) : "")
                 .collect(Collectors.joining(" "));
     }
 }

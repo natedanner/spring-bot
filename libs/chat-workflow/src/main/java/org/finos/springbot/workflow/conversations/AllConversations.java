@@ -3,6 +3,7 @@ package org.finos.springbot.workflow.conversations;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -49,7 +50,7 @@ public class AllConversations implements Conversations<Chat, User>, ApplicationC
 	public Chat getExistingChat(String name) {
 		return getDelegates().stream()
 				.map(c -> c.getExistingChat(name))
-				.filter(c -> c!=null)
+				.filter(Objects::nonNull)
 				.findFirst()
 				.orElse(null);
 	}
@@ -89,7 +90,7 @@ public class AllConversations implements Conversations<Chat, User>, ApplicationC
 	public User getUserById(String id) {
 		return getDelegates().stream()
 			.map(p -> p.getUserById(id))
-			.filter(u -> u != null)
+			.filter(Objects::nonNull)
 			.findFirst()
 			.orElse(null);
 	}
@@ -98,7 +99,7 @@ public class AllConversations implements Conversations<Chat, User>, ApplicationC
 	public Chat getChatById(String id) {
 		return getDelegates().stream()
 			.map(p -> p.getChatById(id))
-			.filter(c -> c != null)
+			.filter(Objects::nonNull)
 			.findFirst()
 			.orElse(null);
 	}

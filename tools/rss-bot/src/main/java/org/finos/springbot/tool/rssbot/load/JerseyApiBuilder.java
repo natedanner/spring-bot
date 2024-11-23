@@ -53,8 +53,7 @@ public class JerseyApiBuilder extends AbstractApiBuilder {
 		    jcb = jcb.withConfig(createConfig());
 			registerFeatures(jcb);
 			Client client = jcb.build();
-			WebTarget webTarget = client.target(url);
-			return webTarget;
+			return client.target(url);
 		} catch (Exception e) {
 			throw new UnsupportedOperationException("Couldn't create jersey client", e);
 		}

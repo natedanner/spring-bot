@@ -70,9 +70,8 @@ public class ReminderController {
 	}
 
 	public Map<String, String> timezones() {
-		Map<String, String> zoneMap = ZoneId.getAvailableZoneIds().stream().sorted()
+		return ZoneId.getAvailableZoneIds().stream().sorted()
 				.collect(Collectors.toMap(k -> k, k -> k));
-		return zoneMap;
 	}
 
 	@ChatRequest(value = "timezones", description = "List Time Zones")

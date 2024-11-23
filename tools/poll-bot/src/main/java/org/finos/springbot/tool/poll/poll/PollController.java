@@ -128,7 +128,7 @@ public class PollController {
 		List<Answer> responses = h.getFromHistory(Answer.class, pollId.getText()+ANSWER_SUFFIX, r, null);
 		
 		// make sure people only vote once
-		Set<User> seen = new HashSet<User>();
+		Set<User> seen = new HashSet<>();
  
 		List<Integer> counts = new ArrayList<>(q.options.size());
 		

@@ -95,7 +95,7 @@ public class AdaptiveCardTemplateProvider extends AbstractResourceTemplateProvid
 	protected boolean needsButtons(WorkResponse r) {
 		Map<String, Object> data = r.getData();
 		ButtonList bl = (ButtonList) data.get(ButtonList.KEY);
-		return ((bl != null) && (bl.getContents().size() > 0));
+		return (bl != null) && (!bl.getContents().isEmpty());
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class AdaptiveCardTemplateProvider extends AbstractResourceTemplateProvid
 
 			String tv = js.singleThreadedEvalLoop(dataStr, templateStr);
 			JsonNode combined = om.readTree(tv);
-			handleFormFieldNames(new HashMap<String, Integer>(), combined, null, null);
+			handleFormFieldNames(new HashMap<>(), combined, null, null);
 			
 			System.out.println("COMBINED: \n"+ om.writerWithDefaultPrettyPrinter().writeValueAsString(combined));
 			return combined;
@@ -149,7 +149,7 @@ public class AdaptiveCardTemplateProvider extends AbstractResourceTemplateProvid
 				handleFormFieldNames(indexes, jsonNode, null, null);
 			}
 		} else if (n.isObject()) {
-			ObjectNode on = ((ObjectNode) n);
+			ObjectNode on = (ObjectNode) n;
 			
 			for (Iterator<String> iterator = on.fieldNames(); iterator.hasNext();) {
 				String field = iterator.next();

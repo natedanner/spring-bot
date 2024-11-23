@@ -40,7 +40,7 @@ public abstract class AbstractTopLevelConverter<X, MODE> implements WithType<X>,
 	 */
 	public WithField<X> topLevelFieldOutput() {
 		
-		return new WithField<X>() {
+		return new WithField<>() {
 			
 			public X apply(Field f, boolean editMode, Variable variable, WithType<X> contentHandler) {
 				Type t = f.getGenericType();

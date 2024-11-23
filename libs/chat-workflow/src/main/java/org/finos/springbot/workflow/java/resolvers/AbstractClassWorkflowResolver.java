@@ -44,8 +44,7 @@ public abstract class AbstractClassWorkflowResolver implements WorkflowResolver 
 	
 	public static Type getOptionalType(Type t) {
 		ParameterizedType pt = (ParameterizedType) t;
-		Type out = pt.getActualTypeArguments()[0];
-		return out;
+		return pt.getActualTypeArguments()[0];
 	}
 	
 	public abstract boolean canResolve(Class<?> t);

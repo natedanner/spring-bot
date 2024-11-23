@@ -21,11 +21,10 @@ public class TeamsConversationsConfig extends BotDependencyConfiguration {
 	@Bean
 	public MicrosoftAppCredentials microsoftCredentials(@Value("${teams.app.tennantId}") String tennantId) {
 		com.microsoft.bot.integration.Configuration conf = getConfiguration();
-		MicrosoftAppCredentials mac = new MicrosoftAppCredentials(
+		return new MicrosoftAppCredentials(
 				conf.getProperty(MicrosoftAppCredentials.MICROSOFTAPPID),
 				conf.getProperty(MicrosoftAppCredentials.MICROSOFTAPPPASSWORD),
 				tennantId);
-		return mac;
 	}
 	
 	@Bean 
@@ -66,8 +65,7 @@ public class TeamsConversationsConfig extends BotDependencyConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public BotFrameworkHttpAdapter getBotFrameworkHttpAdaptor() {
-    	AdapterWithErrorHandler out = new AdapterWithErrorHandler(getConfiguration());
-    	return out;
+    	return new AdapterWithErrorHandler(getConfiguration());
     }
 
 	@Autowired

@@ -75,7 +75,7 @@ public class TeamsAdaptiveCardTemplatingTest extends AbstractTemplatingTest {
 	    	// populate with at least one button
 	    	Map<String, Object> data = workResponse.getData();
 	    	ButtonList bl = (ButtonList) data.get(ButtonList.KEY);
-	    	if ((bl == null) || (bl.getContents().size() == 0)) {
+	    	if ((bl == null) || (bl.getContents().isEmpty())) {
 	    		data.put(ButtonList.KEY, new ButtonList(
 	    				Arrays.asList(new Button("test", Button.Type.ACTION, "Submit"))));
 	    	}

@@ -20,7 +20,7 @@ public class DropdownAnnotationConverter<X> extends AbstractSimpleTypeConverter<
 
 	@Override
 	public boolean canConvert(Field ctx, Type t) {
-		return (getDropdownAnnotation(ctx) != null);
+		return getDropdownAnnotation(ctx) != null;
 	}
 
 	protected Dropdown getDropdownAnnotation(Field f) {

@@ -9,7 +9,7 @@ import org.finos.springbot.workflow.annotations.Work;
 @Work(index = false)
 public class ButtonList {
 	
-	private Collection<Button> contents = new ArrayList<Button>();
+	private Collection<Button> contents = new ArrayList<>();
 
 	public static final String KEY = "buttons";
 
@@ -22,7 +22,7 @@ public class ButtonList {
 	}
 
 	public ButtonList() {
-		this.contents = new ArrayList<Button>();
+		this.contents = new ArrayList<>();
 	}
 
 	public ButtonList(Collection<Button> arg0) {

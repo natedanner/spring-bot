@@ -182,8 +182,7 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 			} catch (Throwable e1) {
 				if (e instanceof CompletionException
 						&& ((CompletionException) e1).getCause() instanceof ErrorResponseException) {
-					ErrorResponseException ere = (ErrorResponseException) ((CompletionException) e1).getCause();
-					throw ere;
+					throw (ErrorResponseException) ((CompletionException) e1).getCause();
 				}
 				throw new RuntimeException("Passing on exception", e1);
 			}
@@ -242,7 +241,7 @@ public class TeamsResponseHandler implements ResponseHandler<ResourceResponse>, 
 	}
 	
 	public static Map<String, String> createStorageTags(Map<String, Object> data, TeamsAddressable address) {
-		Map<String, String> out = new HashMap<String, String>();
+		Map<String, String> out = new HashMap<>();
 		HeaderDetails h = (HeaderDetails) data.get(HeaderDetails.KEY);
 		if (h != null) {
 			h.getTags().forEach(t -> out.put(t, TeamsStateStorage.PRESENT));

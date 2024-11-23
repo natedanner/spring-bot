@@ -33,15 +33,15 @@ import org.javatuples.Pair;
 
 public class FileStateStorage extends AbstractStateStorage {
 
-	final static String DATA_FOLDER = "data";
-	final static String TAG_INDEX_FOLDER = "tag_index";
-	final static String FILE_EXT = ".txt";
+	static final String DATA_FOLDER = "data";
+	static final String TAG_INDEX_FOLDER = "tag_index";
+	static final String FILE_EXT = ".txt";
 
 	protected Map<String, String> store = new HashMap<>();
 	protected Map<String, List<Pair<String, String>>> tagIndex = new HashMap<>();
 
-	private EntityJsonConverter ejc;
-	private String filePath;
+	private final EntityJsonConverter ejc;
+	private final String filePath;
 
 	public FileStateStorage(EntityJsonConverter ejc, String filePath) {
 		super();
@@ -128,12 +128,12 @@ public class FileStateStorage extends AbstractStateStorage {
 					.map(f -> ejc.readValue(readFile(f.getAbsolutePath()).orElse("")))
 					.filter(filterAddressableTypeFiles()).collect(Collectors.toList());
 
-			if ((singleResultOnly) && (dataFiles.size() > 0)) {
+			if (singleResultOnly && (!dataFiles.isEmpty())) {
 				out = out.subList(0, 1);
 			}
 			return out;
 		} else {
-			if ((singleResultOnly) && (dataFiles.size() > 0)) {
+			if (singleResultOnly && (!dataFiles.isEmpty())) {
 				dataFiles = dataFiles.subList(0, 1);
 			}
 			return dataFiles.stream().map(f -> ejc.readValue(readFile(f.getAbsolutePath()).orElse("")))
@@ -237,10 +237,7 @@ public class FileStateStorage extends AbstractStateStorage {
 		if (f.operator.contains(">") && (cmp < 0)) {
 			return true;
 		}
-		if (f.operator.contains("<") && (cmp > 0)) {
-			return true;
-		}
-		return false;
+		return f.operator.contains("<") && (cmp > 0);
 	}
 
 	private Predicate<? super EntityJson> filterAddressableTypeFiles() {

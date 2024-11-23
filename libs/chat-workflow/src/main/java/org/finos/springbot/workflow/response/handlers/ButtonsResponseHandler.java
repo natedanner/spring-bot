@@ -38,9 +38,7 @@ public class ButtonsResponseHandler implements ResponseHandler<Void>, Applicatio
 
     public static String formatFieldName(String fieldName) {
         return Arrays.stream(Optional.ofNullable(fieldName).orElse("").split(DEFAULT_FORMATTER_PATTERN))
-                .map(word -> {
-                    return null != word && !word.trim().isEmpty() ? Character.toUpperCase(word.charAt(0)) + word.substring(1) : "";
-                })
+                .map(word -> null != word && !word.trim().isEmpty() ? Character.toUpperCase(word.charAt(0)) + word.substring(1) : "")
                 .collect(Collectors.joining(" "));
     }
 	
@@ -53,7 +51,7 @@ public class ButtonsResponseHandler implements ResponseHandler<Void>, Applicatio
 			
 			ButtonList obl = (ButtonList) ((WorkResponse) t).getData().get(ButtonList.KEY);
 			
-			if ((obl != null) && (obl.getContents().size() > 0)) {
+			if ((obl != null) && (!obl.getContents().isEmpty())) {
 				return null;
 			}
 			
@@ -97,11 +95,7 @@ public class ButtonsResponseHandler implements ResponseHandler<Void>, Applicatio
 	}
 	
 	protected boolean exposedMatchesObject(ChatButton e, Object o) {
-		if ((o != null) && (e.value().isAssignableFrom(o.getClass()))) {
-			return true;
-		}
-	
-		return false;
+		return (o != null) && (e.value().isAssignableFrom(o.getClass()));
 	}
 
 	@Override

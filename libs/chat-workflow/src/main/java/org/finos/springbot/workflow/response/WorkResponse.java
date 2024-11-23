@@ -77,7 +77,7 @@ public class WorkResponse extends DataResponse {
 		String templateName = t == null ? null : (m == WorkMode.EDIT ? t.edit() : t.view());
 		
 		if (!StringUtils.hasText(templateName)) {
-			return (m == WorkMode.EDIT) ? DEFAULT_FORM_TEMPLATE_EDIT : DEFAULT_FORM_TEMPLATE_VIEW;
+			return m == WorkMode.EDIT ? DEFAULT_FORM_TEMPLATE_EDIT : DEFAULT_FORM_TEMPLATE_VIEW;
 		} else {
 			return templateName;
 		}

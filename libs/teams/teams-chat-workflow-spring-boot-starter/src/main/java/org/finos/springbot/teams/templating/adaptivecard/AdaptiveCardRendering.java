@@ -67,8 +67,7 @@ public class AdaptiveCardRendering implements Rendering<JsonNode> {
 		
 	@Override
 	public ObjectNode list(List<JsonNode> contents) {
-		ObjectNode out = rows("emphasis", contents);
-		return out;
+		return rows("emphasis", contents);
 	}
 	
 	private ObjectNode rows(String style, List<JsonNode> rows) {
@@ -107,7 +106,7 @@ public class AdaptiveCardRendering implements Rendering<JsonNode> {
 	public JsonNode addFieldName(String field, JsonNode value) {
 		if (!StringUtils.hasText(field)) {
 			return null;
-		} else if (value.get("type").asText().equals("Input.Toggle")) {
+		} else if ("Input.Toggle".equals(value.get("type").asText())) {
 			ObjectNode on = (ObjectNode) value;
 			on.put("title", field);
 			return on;
@@ -117,8 +116,7 @@ public class AdaptiveCardRendering implements Rendering<JsonNode> {
 			return on;
 		} else {
 			JsonNode desc = description(field);
-			ObjectNode out = rows("", desc, rows("default", value));
-			return out;
+			return rows("", desc, rows("default", value));
 		}
 	}
 	

@@ -14,8 +14,9 @@ public interface Image extends Content {
 	public String getAlt();
 	
 	public static class ImageImpl implements Image {
-		
-		private final String url, alt;
+
+		private final String url;
+		private final String alt;
 
 		public ImageImpl(String url, String alt) {
 			super();

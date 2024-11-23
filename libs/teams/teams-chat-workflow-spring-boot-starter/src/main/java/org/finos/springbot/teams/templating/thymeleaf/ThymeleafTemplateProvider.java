@@ -59,14 +59,13 @@ public class ThymeleafTemplateProvider extends AbstractResourceTemplateProvider<
 		}
 		
 		String defaultTemplate = getTemplateForName(getDefaultTemplateName());
-		String replacedText = defaultTemplate.replace("<!-- Message Content -->", insert);
-		return replacedText;
+		return defaultTemplate.replace("<!-- Message Content -->", insert);
 	}
 	
 	public static boolean needsButtons(Response r) {
 		if (r instanceof WorkResponse) {
 			ButtonList bl = (ButtonList) ((WorkResponse) r).getData().get(ButtonList.KEY);
-			return (bl != null) && (bl.getContents().size() > 0);
+			return (bl != null) && (!bl.getContents().isEmpty());
 		} else {
 			return false;
 		}
@@ -74,8 +73,7 @@ public class ThymeleafTemplateProvider extends AbstractResourceTemplateProvider<
 
 	@Override
 	protected String deserializeTemplate(InputStream is) throws IOException {
-		String template = StreamUtils.copyToString(is, StandardCharsets.UTF_8);
-		return template;
+		return StreamUtils.copyToString(is, StandardCharsets.UTF_8);
 	}
 
 	public static final Pattern ENTITY_FINDER = Pattern.compile("\\<at\\ key=\\\"(.*?)\"\\>(.*?)<\\/at\\>");
@@ -91,7 +89,7 @@ public class ThymeleafTemplateProvider extends AbstractResourceTemplateProvider<
 		
 		// figure out the entities.
 		Matcher m = ENTITY_FINDER.matcher(done);
-		List<Entity> entities = new ArrayList<Entity>();
+		List<Entity> entities = new ArrayList<>();
 		
 		done = MatcherUtil.replaceAll(done, m, x -> {
 			String copy = "<at>"+x.group(2)+"</at>";

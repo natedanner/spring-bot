@@ -184,12 +184,12 @@ public class ChatHandlerMethod {
 			return false;
 		}
 		ChatHandlerMethod otherMethod = (ChatHandlerMethod) other;
-		return (this.bean.equals(otherMethod.bean) && this.method.equals(otherMethod.method));
+		return this.bean.equals(otherMethod.bean) && this.method.equals(otherMethod.method);
 	}
 
 	@Override
 	public int hashCode() {
-		return (this.bean.hashCode() * 31 + this.method.hashCode());
+		return this.bean.hashCode() * 31 + this.method.hashCode();
 	}
 
 	@Override

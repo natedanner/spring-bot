@@ -42,7 +42,7 @@ public class RSSProperties {
 	String failureMessage = "<p>There has been a problem configuring this RSS-Feed.</p>"+
 			"<p>Please talk to the Symphony Administrators for assistance</p>";
 	
-	String observationStreamId = null;		// means don't use
+	String observationStreamId;		// means don't use
 
 	public List<ProxyProperties> getProxies() {
 		return proxies;

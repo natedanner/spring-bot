@@ -46,7 +46,7 @@ public class MessagePartWorkflowResolverFactory implements WorkflowResolverFacto
 	}
 
 
-	private List<Class<? extends Content>> contentClasses;
+	private final List<Class<? extends Content>> contentClasses;
 	
 
 	public MessagePartWorkflowResolverFactory(List<Class<? extends Content>> contentClasses) {
@@ -77,7 +77,7 @@ public class MessagePartWorkflowResolverFactory implements WorkflowResolverFacto
 	protected Map<Class<?>, Deque<Object>> setupParameterBuckets(Message m) {
 		Map<Class<?>, Deque<Object>> out = new HashMap<>();
 		for (Class<? extends Content> class1 : contentClasses) {
-			Deque<Object> l = new LinkedList<Object>();
+			Deque<Object> l = new LinkedList<>();
 			l.addAll(m.only(class1));
 			out.put(class1, l);
 		}

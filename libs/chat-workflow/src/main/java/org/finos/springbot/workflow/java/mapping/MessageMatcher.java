@@ -16,8 +16,8 @@ public class MessageMatcher {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(MessageMatcher.class);
 
-	
-	private Content pattern;
+
+	private final Content pattern;
 	
 	public MessageMatcher(Content pattern) {
 		this.pattern = pattern;
@@ -92,9 +92,11 @@ public class MessageMatcher {
 			case LIST:
 				return true;
 			case OPTIONAL:
-				return true;
-			default: 
+				return true; 
 			case ONE:
+				return false; 
+			case ONE:
+			default:
 				return false;
 			}
 			
@@ -109,9 +111,11 @@ public class MessageMatcher {
 			case LIST:
 				return true;
 			case OPTIONAL:
-				return false;
-			default: 
+				return false; 
 			case ONE:
+				return false; 
+			case ONE:
+			default:
 				return false;
 			}
 			
